@@ -390,6 +390,180 @@ def _bilingual_suffix(lang: str) -> str:
     )
 
 
+# По прямому запросу заказчика: для IELTS Writing (оба уровня 5-6, оба Task 1 и
+# Task 2) формат ответа заменён на детальный постраничный/попредложенческий
+# разбор — заказчик прислал 2 готовых образца такого разбора (Task 1 — process
+# diagram, Task 2 — эссе) и попросил воспроизводить именно эту структуру,
+# «шаг в шаг». Это ПОЛНОСТЬЮ заменяет Burger-технику для этих двух уровней+
+# task_type (не GENERAL levels 1-4 и не Speaking — по ним таких образцов не
+# присылали) — см. _generate_writing_sync, где выбирается либо этот шаблон,
+# либо старая Burger-схема. Секции ниже — не стиль-рекомендация, а строгий
+# чек-лист: модель должна пройти по нему пункт за пунктом.
+
+_IELTS_WRITING_TASK1_STRUCTURE = """
+
+## OUTPUT STRUCTURE OVERRIDE — IELTS Task 1 (Report) ONLY
+
+For this IELTS Task 1 submission, ignore the "one warm flowing message, no labeled
+sections" instruction above entirely — use this exact structured format instead, with
+these exact section headers, in this exact order. This is a strict template, not a
+style suggestion; do not skip, merge, or reorder any of the 7 sections.
+
+### 1. Introduction
+Quote the student's introduction/paraphrase sentence(s). Then:
+**Estimated Band: X.X**
+If there is a mistake, add a "**Mistake**" (or "**Mistakes**" if more than one)
+section: for each one, show
+❌ [the exact wrong phrase, quoted]
+[one short sentence explaining why it's wrong]
+then a "**Correct**" section with the fixed version (add a second alternative
+introduced by "or" if a genuinely different phrasing also works). If the introduction
+has no real problems, skip the Mistake/Correct block and just give one short positive
+line instead of inventing a mistake.
+
+### 2. Overview
+Quote the student's overview sentence(s). Then:
+**Estimated Band: X.X**
+One short general comment on the overview (e.g. "Good overview, but there are some
+grammar mistakes."). If there are mistakes, a "**Mistakes**" section following the
+same ❌ / explanation / **Correct:** (or **Better**) pattern as above — one ❌/fix pair
+per mistake found. Close this section with "**Band [one band above the Estimated Band
+just given] Version**" — a fully rewritten version of just the overview, at that
+higher band, so the student can see the gap concretely.
+
+### 3. Body Paragraph
+Break the student's body into individual sentences, each under its own header
+"**Sentence 1**", "**Sentence 2**", etc. (use as many as the student actually wrote,
+in order). For each sentence:
+- Quote it (or the relevant fragment).
+- If it has a problem: a "**Problems**" section with one ❌ [wrong phrase] + a short
+  explanation for each issue in that sentence (more than one ❌ can sit under the same
+  Problems header), then "**Better**" with the improved full sentence. For a simple
+  wrong-collocation-type slip, "**Correct:**" plus the fixed phrase is enough instead
+  of a full rewrite.
+- If a sentence is factually wrong about the source image/data (the most serious kind
+  of Task 1 error), say so plainly under "Problems" — name what the image actually
+  shows and why the student's claim doesn't match it — before giving the "Better"
+  rewrite.
+- If a sentence is genuinely strong, skip ❌ entirely and just give one or two words
+  of real, specific praise (e.g. "Excellent structure.\\nBand 8 grammar.") — don't
+  force a correction where none is needed.
+
+### 4. Sentence-by-Sentence Corrections
+A consolidated, deduplicated list of every ❌/fix pair used anywhere above, in the
+plainest possible format, each on its own two lines:
+❌
+[wrong phrase]
+
+✔
+[corrected phrase]
+
+### 5. Why It Is Not Band [one full band above the highest Estimated Band given above]
+A numbered list with exactly these three items:
+1. **Task Achievement Accuracy (Most Important)** — call it "Process Accuracy" if the
+   source is a process diagram, or "Data Accuracy" if it's a chart/graph/table/map.
+   Name the specific accuracy problems (facts, sequence, or comparisons the student
+   got wrong or missed), each shown as a ❌ (student's version) / ✔ (correct
+   understanding) pair.
+2. **Missing Important Information** — a bullet list of concrete features/stages/data
+   points the source image clearly shows that the student's report left out entirely.
+3. **Lexical Precision** — "Band [same target band as the section header] prefers:"
+   followed by a bullet list of more precise vocabulary for this specific topic, then
+   the line "rather than more general descriptions."
+
+### 6. Band [half a band above the "Why It Is Not Band X" target] Sample
+A complete, well-written sample report responding to the same task and the same
+source image/data, written at the band named in this header. This must be a real,
+complete answer, not a fragment — follow the SAMPLE ESSAY STYLE — Task 1 rules below.
+
+### 7. Band [the "Why It Is Not Band X" target]+ Vocabulary for [the specific chart/
+report type, e.g. "Process Diagrams", "Bar Charts", "Maps"]
+A two-column "Instead of / Use" table with 6-10 rows of topic-specific upgrades from
+generic wording to precise Task 1 vocabulary."""
+
+_IELTS_WRITING_TASK2_STRUCTURE = """
+
+## OUTPUT STRUCTURE OVERRIDE — IELTS Task 2 (Essay) ONLY
+
+For this IELTS Task 2 submission, ignore the "one warm flowing message, no labeled
+sections" instruction above entirely — use this exact structured format instead. This
+is a strict template, not a style suggestion.
+
+Go through the essay paragraph by paragraph, in the order the student wrote them
+(Introduction, then each body paragraph in turn, then Conclusion), labelling each
+paragraph with a plain header (e.g. "**Body Paragraph 1**") before its first
+correction. Inside each paragraph, pick out every sentence that has a real problem
+worth fixing (skip sentences that are already fine — don't force a correction where
+none is needed) and, for each one, output:
+
+**Original Sentence**
+[the sentence exactly as the student wrote it]
+
+**Corrected**
+[the same sentence rewritten with the fix — put the specific words/phrases that
+changed in bold so the student can see exactly what moved]
+
+**Errors Explained**
+- ❌ "[the exact wrong phrase]" ➔ [a short explanation of what's wrong and why,
+  written as a genuine aside, not a formula] — OR, when the fix is a simple
+  like-for-like swap that doesn't need explaining first: ❌ "[wrong]" ➔ ✅ "[right]" —
+  [short explanation]
+
+After going through the whole essay, close with:
+
+**Performance Summary**
+A short numbered list (2-4 items) of the essay's biggest recurring patterns — each
+item starts with a **bold short category name:** (e.g. "**Academic Register &
+Pronouns:**") followed by one or two sentences of real, specific advice about that
+pattern, not a generic remark.
+
+**Model Essay (Polished Version)**
+A complete, well-written model essay responding to the same task, incorporating the
+fixes above. Follow the SAMPLE ESSAY STYLE — Task 2 rules below.
+
+Do not skip the Performance Summary or the Model Essay."""
+
+_SAMPLE_ESSAY_STYLE_TASK1 = """
+
+## SAMPLE ESSAY STYLE — Task 1 (Report)
+When writing the "Band X Sample"/"Band X Version" text (the model's own report, not
+the student's), write it the way real Band 8-9 IELTS Academic Task 1 reports are
+written:
+- Opening sentence: a paraphrase of the task prompt naming the chart/diagram type and
+  what it shows, never copying the prompt's wording verbatim.
+- Overview (end of the intro, signalled with "Overall,"): one or two sentences giving
+  the big-picture trend/pattern with NO specific numbers — this is what separates
+  Band 7+ from lower bands.
+- Body paragraphs: group the data logically by theme, category, or high-vs-low value —
+  never just march through the chart point by point in reading order. Always include
+  specific figures with correct units, and use comparison language (while, whereas, in
+  contrast, similarly) between the groups.
+- A wide, precise range of trend/change vocabulary (rose, climbed, plummeted,
+  fluctuated, peaked, doubled, remained stable/steady, a marginal/dramatic/gradual
+  increase, etc.) and precise prepositions (from X to Y, by Z, at W).
+- No first-person opinion anywhere — Task 1 is purely descriptive.
+- Length: comfortably over 150 words (aim 180-260) — never bare-minimum."""
+
+_SAMPLE_ESSAY_STYLE_TASK2 = """
+
+## SAMPLE ESSAY STYLE — Task 2 (Essay)
+When writing the "Model Essay"/"Sample Essay" text (the model's own essay, not the
+student's), write it the way real Band 8-9 IELTS Task 2 essays are written:
+- Introduction: a brief paraphrase of the issue/question, followed by a clear thesis
+  stating the writer's actual position (for opinion/agree-disagree questions) or which
+  views will be discussed (for discuss-both-views questions) — the position must stay
+  consistent all the way to the conclusion.
+- Two body paragraphs, each built around one main idea, developed with a real,
+  concrete example (a named place, person, statistic, or observed example) — never
+  left as an unsupported abstract claim.
+- Conclusion: restates the position in different words (never copy-pasted from the
+  intro), optionally with one forward-looking remark.
+- A wide range of cohesive devices used naturally (Firstly, Moreover, In addition,
+  However, Despite, Nonetheless, In conclusion...) — not the same 2-3 repeated.
+- Formal register throughout — no contractions, no second-person "you."
+- Length: comfortably over 250 words (aim 280-420) — never bare-minimum."""
+
+
 def _get_client() -> OpenAI:
     global _client
     if _client is None:
@@ -460,14 +634,32 @@ def _generate_writing_sync(
             "The following image is the student's own submitted work (a photo of their essay):",
         )
 
-    ielts_reminder = _IELTS_WRITING_BAND_REMINDER if level_key in IELTS_LEVEL_KEYS else ""
-    system_content = (
-        WRITING_SYSTEM_PROMPT
-        + ielts_reminder
-        + _FEEDBACK_FORMAT_REMINDER
-        + _NATURAL_TONE_REMINDER
-        + _bilingual_suffix(lang)
-    )
+    if level_key in IELTS_LEVEL_KEYS and task_type_key == "task1":
+        # Заказчик прислал готовый образец разбора Task 1 и попросил
+        # воспроизводить именно эту структуру — полностью заменяет
+        # Burger-прозу для этой пары уровень+task_type (см. константы выше).
+        system_content = (
+            WRITING_SYSTEM_PROMPT
+            + _IELTS_WRITING_TASK1_STRUCTURE
+            + _SAMPLE_ESSAY_STYLE_TASK1
+            + _bilingual_suffix(lang)
+        )
+    elif level_key in IELTS_LEVEL_KEYS and task_type_key == "task2":
+        system_content = (
+            WRITING_SYSTEM_PROMPT
+            + _IELTS_WRITING_TASK2_STRUCTURE
+            + _SAMPLE_ESSAY_STYLE_TASK2
+            + _bilingual_suffix(lang)
+        )
+    else:
+        ielts_reminder = _IELTS_WRITING_BAND_REMINDER if level_key in IELTS_LEVEL_KEYS else ""
+        system_content = (
+            WRITING_SYSTEM_PROMPT
+            + ielts_reminder
+            + _FEEDBACK_FORMAT_REMINDER
+            + _NATURAL_TONE_REMINDER
+            + _bilingual_suffix(lang)
+        )
     response = _get_client().chat.completions.create(
         model=config.OPENAI_MODEL,
         messages=[
