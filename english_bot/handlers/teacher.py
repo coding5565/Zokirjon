@@ -26,7 +26,7 @@ import logging
 import re
 from typing import Optional
 
-from telegram import ReplyKeyboardMarkup, Update
+from telegram import InputFile, ReplyKeyboardMarkup, Update
 from telegram.ext import (
     CallbackQueryHandler,
     CommandHandler,
@@ -41,7 +41,7 @@ from database import db
 from database.models import LEVELS
 from handlers import common
 from locales import LABEL_TO_ACTION, labels_for_action, t
-from modules import ai_feedback, content_tree, homework_draft
+from modules import ai_feedback, content_tree, feedback_doc, file_intake, homework_draft
 
 logger = logging.getLogger(__name__)
 
@@ -80,7 +80,41 @@ def _build_speaking_part_keyboard(lang: str) -> ReplyKeyboardMarkup:
 def _clear_feedback_draft(context: ContextTypes.DEFAULT_TYPE) -> None:
     context.user_data.pop("fb_level", None)
     context.user_data.pop("fb_task", None)
-    context.user_data.pop("fb_question", None)
+    context.user_data.pop("fb_question_text", None)
+    context.user_data.pop("fb_question_images", None)
+
+
+async def _extract_question_material(bot, message):
+    """
+    Скачивает присланный файл вопроса/задания (фото или документ — PDF/.docx)
+    и классифицирует его через modules.file_intake. Возвращает
+    (text, images, error_key); error_key не None при неподдерживаемом
+    формате — тогда text/images пустые, а вызывающая сторона остаётся на
+    том же шаге диалога и показывает понятную ошибку.
+    """
+    if message.photo:
+        tg_file = await bot.get_file(message.photo[-1].file_id)
+        data = bytes(await tg_file.download_as_bytearray())
+        result = file_intake.classify_and_extract(data, "image/jpeg", "photo.jpg")
+        return result.text, result.images, result.error_key
+
+    document = message.document
+    tg_file = await bot.get_file(document.file_id)
+    data = bytes(await tg_file.download_as_bytearray())
+    result = file_intake.classify_and_extract(data, document.mime_type, document.file_name)
+    return result.text, result.images, result.error_key
+
+
+async def _deliver_feedback_document(
+    bot, chat_id: int, lang: str, feedback_text: str, title: str
+) -> None:
+    """Фидбек отправляется файлом (.docx), а не стеной текста в чате — по просьбе заказчика."""
+    doc_bytes = feedback_doc.build_feedback_document(feedback_text, title)
+    await bot.send_document(
+        chat_id=chat_id,
+        document=InputFile(doc_bytes, filename="feedback.docx"),
+        caption=t("feedback_document_caption", lang),
+    )
 
 
 def _regex_filter_for_action(action: str) -> filters.BaseFilter:
@@ -96,10 +130,11 @@ BACK_FILTER = _regex_filter_for_action("back")
 
 async def _require_teacher(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """
-    Возвращает строку users для учителя, либо None (и отправляет понятное
-    сообщение), если это не учитель или пользователь ещё не прошёл /start.
-    Доступ к учительским функциям определяется только TEACHER_IDS из .env
-    (ТЗ, раздел 7) — не самоназначением роли в БД.
+    Возвращает строку users для активного учителя, либо None (и отправляет
+    понятное сообщение), если доступ не подтверждён или пользователь ещё не
+    прошёл /start. «Активный учитель» — TEACHER_IDS-бутстрап-админ ИЛИ
+    пользователь, одобренный админом именно с ролью 'teacher' (см.
+    common.is_active_teacher) — раньше это было только TEACHER_IDS.
     """
     telegram_id = update.effective_user.id
     user = db.get_user_by_telegram_id(telegram_id)
@@ -108,11 +143,18 @@ async def _require_teacher(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.effective_chat.send_message("/start")
         return None
 
-    if not config.is_teacher(telegram_id) or user["role"] != "teacher":
-        await update.effective_message.reply_text(t("error_not_teacher", user["language"]))
-        return None
+    if common.is_active_teacher(telegram_id, user):
+        return user
 
-    return user
+    lang = user["language"]
+    if user["role"] == "teacher" and user["access_status"] == "pending":
+        message_key = "access_pending"
+    elif user["access_status"] == "rejected":
+        message_key = "access_rejected_notice"
+    else:
+        message_key = "error_not_teacher"
+    await update.effective_message.reply_text(t(message_key, lang))
+    return None
 
 
 async def _cancel_to_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -172,13 +214,13 @@ async def handle_navigation_text(update: Update, context: ContextTypes.DEFAULT_T
 
     lang = user["language"]
 
-    if user["role"] == "teacher" and config.is_teacher(telegram_id):
+    if common.is_active_teacher(telegram_id, user):
         editable = True
-    elif user["role"] == "student" and user["access_status"] == "approved":
+    elif user["access_status"] == "approved":
         editable = False
     else:
         status = user["access_status"]
-        message_key = "access_rejected_notice" if status == "rejected" else "student_pending"
+        message_key = "access_rejected_notice" if status == "rejected" else "access_pending"
         await update.message.reply_text(t(message_key, lang))
         return
 
@@ -412,15 +454,29 @@ async def writing_question_received(update: Update, context: ContextTypes.DEFAUL
         return ConversationHandler.END
 
     lang = user["language"]
-    if not update.message.text:
-        await update.message.reply_text(t("error_question_needs_text", lang))
+    message = update.message
+    back_only_keyboard = ReplyKeyboardMarkup([[t("btn_back", lang)]], resize_keyboard=True)
+
+    if message.text:
+        context.user_data["fb_question_text"] = message.text
+        context.user_data["fb_question_images"] = []
+    elif message.photo or message.document:
+        if message.document and message.document.file_size:
+            max_bytes = config.MAX_MEDIA_SIZE_MB * 1024 * 1024
+            if message.document.file_size > max_bytes:
+                await message.reply_text(t("error_file_too_large", lang, max_mb=config.MAX_MEDIA_SIZE_MB))
+                return WRITING_QUESTION
+        text, images, error_key = await _extract_question_material(context.bot, message)
+        if error_key:
+            await message.reply_text(t(error_key, lang))
+            return WRITING_QUESTION
+        context.user_data["fb_question_text"] = text or "[image/PDF question material attached]"
+        context.user_data["fb_question_images"] = images
+    else:
+        await message.reply_text(t("error_question_needs_text_or_file", lang))
         return WRITING_QUESTION
 
-    context.user_data["fb_question"] = update.message.text
-    await update.message.reply_text(
-        t("writing_prompt", lang),
-        reply_markup=ReplyKeyboardMarkup([[t("btn_back", lang)]], resize_keyboard=True),
-    )
+    await message.reply_text(t("writing_prompt", lang), reply_markup=back_only_keyboard)
     return WRITING_CONTENT
 
 
@@ -448,7 +504,8 @@ async def writing_receive(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
 
     level_key = context.user_data.get("fb_level")
     task_key = context.user_data.get("fb_task")
-    question = context.user_data.get("fb_question", "")
+    question = context.user_data.get("fb_question_text", "")
+    question_images = context.user_data.get("fb_question_images", [])
 
     submission_id = db.insert_submission(
         user["id"],
@@ -470,6 +527,7 @@ async def writing_receive(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
             level_key=level_key,
             task_type_key=task_key,
             lang=lang,
+            question_images=question_images,
         )
     except Exception:  # noqa: BLE001 - любая ошибка/таймаут OpenAI API
         logger.exception("Ошибка OpenAI при проверке Writing (submission id=%s)", submission_id)
@@ -480,12 +538,20 @@ async def writing_receive(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         return ConversationHandler.END
 
     db.update_submission_feedback(submission_id, feedback)
-    await message.reply_text(
-        f'{t("writing_feedback_header", lang)}\n\n{feedback}',
-        reply_markup=content_tree.build_main_menu_keyboard(lang),
+    await _deliver_feedback_document(
+        context.bot, message.chat_id, lang, feedback, t("writing_feedback_header", lang)
     )
-    _clear_feedback_draft(context)
-    return ConversationHandler.END
+
+    # Пакетный режим (по просьбе заказчика): не завершаем диалог и не чистим
+    # fb_level/fb_task/fb_question* — учитель может сразу прислать следующий
+    # ответ на тот же вопрос без повторного выбора уровня/задания/вопроса.
+    # Останавливается только через «Назад» (writing_back), который и чистит
+    # черновик, и завершает диалог.
+    await message.reply_text(
+        t("batch_next_hint", lang, back=t("btn_back", lang)),
+        reply_markup=ReplyKeyboardMarkup([[t("btn_back", lang)]], resize_keyboard=True),
+    )
+    return WRITING_CONTENT
 
 
 writing_conversation = ConversationHandler(
@@ -589,15 +655,29 @@ async def speaking_question_received(update: Update, context: ContextTypes.DEFAU
         return ConversationHandler.END
 
     lang = user["language"]
-    if not update.message.text:
-        await update.message.reply_text(t("error_question_needs_text", lang))
+    message = update.message
+    back_only_keyboard = ReplyKeyboardMarkup([[t("btn_back", lang)]], resize_keyboard=True)
+
+    if message.text:
+        context.user_data["fb_question_text"] = message.text
+        context.user_data["fb_question_images"] = []
+    elif message.photo or message.document:
+        if message.document and message.document.file_size:
+            max_bytes = config.MAX_MEDIA_SIZE_MB * 1024 * 1024
+            if message.document.file_size > max_bytes:
+                await message.reply_text(t("error_file_too_large", lang, max_mb=config.MAX_MEDIA_SIZE_MB))
+                return SPEAKING_QUESTION
+        text, images, error_key = await _extract_question_material(context.bot, message)
+        if error_key:
+            await message.reply_text(t(error_key, lang))
+            return SPEAKING_QUESTION
+        context.user_data["fb_question_text"] = text or "[image/PDF question material attached]"
+        context.user_data["fb_question_images"] = images
+    else:
+        await message.reply_text(t("error_question_needs_text_or_file", lang))
         return SPEAKING_QUESTION
 
-    context.user_data["fb_question"] = update.message.text
-    await update.message.reply_text(
-        t("speaking_prompt", lang),
-        reply_markup=ReplyKeyboardMarkup([[t("btn_back", lang)]], resize_keyboard=True),
-    )
+    await message.reply_text(t("speaking_prompt", lang), reply_markup=back_only_keyboard)
     return SPEAKING_CONTENT
 
 
@@ -629,7 +709,8 @@ async def speaking_receive(update: Update, context: ContextTypes.DEFAULT_TYPE) -
 
     level_key = context.user_data.get("fb_level")
     task_key = context.user_data.get("fb_task")
-    question = context.user_data.get("fb_question", "")
+    question = context.user_data.get("fb_question_text", "")
+    question_images = context.user_data.get("fb_question_images", [])
 
     submission_id = db.insert_submission(
         user["id"],
@@ -652,6 +733,7 @@ async def speaking_receive(update: Update, context: ContextTypes.DEFAULT_TYPE) -
             level_key=level_key,
             test_part_key=task_key,
             lang=lang,
+            question_images=question_images,
         )
     except Exception:  # noqa: BLE001 - большой файл, неподдерживаемый формат, таймаут и т.п.
         logger.exception("Ошибка OpenAI при проверке Speaking (submission id=%s)", submission_id)
@@ -662,12 +744,16 @@ async def speaking_receive(update: Update, context: ContextTypes.DEFAULT_TYPE) -
         return ConversationHandler.END
 
     db.update_submission_feedback(submission_id, feedback)
-    await message.reply_text(
-        f'{t("speaking_feedback_header", lang)}\n\n{feedback}',
-        reply_markup=content_tree.build_main_menu_keyboard(lang),
+    await _deliver_feedback_document(
+        context.bot, message.chat_id, lang, feedback, t("speaking_feedback_header", lang)
     )
-    _clear_feedback_draft(context)
-    return ConversationHandler.END
+
+    # Пакетный режим — см. комментарий в writing_receive выше.
+    await message.reply_text(
+        t("batch_next_hint", lang, back=t("btn_back", lang)),
+        reply_markup=ReplyKeyboardMarkup([[t("btn_back", lang)]], resize_keyboard=True),
+    )
+    return SPEAKING_CONTENT
 
 
 speaking_conversation = ConversationHandler(

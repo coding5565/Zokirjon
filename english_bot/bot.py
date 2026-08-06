@@ -33,6 +33,9 @@ def build_application() -> Application:
 
     application.add_handler(CallbackQueryHandler(common.language_selected, pattern=r"^lang:"))
     application.add_handler(
+        CallbackQueryHandler(common.role_choice_selected, pattern=r"^role_choice:(student|teacher)$")
+    )
+    application.add_handler(
         CallbackQueryHandler(access.handle_access_decision, pattern=r"^access_(approve|reject):\d+$")
     )
     application.add_handler(CommandHandler("start", common.start))

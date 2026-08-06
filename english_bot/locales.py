@@ -35,17 +35,23 @@ LOCALES: dict[str, dict[str, str]] = {
         "unit_button": "Unit {n}",
         "lesson_button": "Lesson {n}",
         "start_role_greeting": "Здравствуйте, {name}! Выберите раздел:",
-        "student_pending": (
-            "Ваш запрос на доступ отправлен учителю.\n"
-            "Как только он подтвердит — вы получите доступ к материалам."
+        "choose_role_prompt": "Кто вы?",
+        "btn_role_student": "🎓 Я ученик",
+        "btn_role_teacher": "🧑‍🏫 Я учитель",
+        "role_label_student": "Ученик",
+        "role_label_teacher": "Учитель",
+        "access_pending": (
+            "Ваш запрос на доступ отправлен администратору.\n"
+            "Как только он подтвердит — вы получите доступ."
         ),
         "access_approved_notice": "✅ Вам открыт доступ к материалам бота!",
         "access_rejected_notice": "❌ Вам не предоставлен доступ к материалам бота.",
         "teacher_new_request": (
             "🔔 Новый запрос на доступ.\n"
             "Имя: {name}\n"
-            "Telegram ID: {telegram_id}\n\n"
-            "Выдать доступ на просмотр материалов?"
+            "Telegram ID: {telegram_id}\n"
+            "Роль: {role}\n\n"
+            "Выдать доступ?"
         ),
         "btn_approve": "✅ Разрешить",
         "btn_reject": "❌ Отклонить",
@@ -82,8 +88,11 @@ LOCALES: dict[str, dict[str, str]] = {
         "error_use_buttons": "Пожалуйста, используйте кнопки меню.",
         "error_not_teacher": "Эта функция пока доступна только учителю.",
         "error_writing_needs_text_or_photo": "Пришлите, пожалуйста, текст или фото сочинения.",
-        "error_question_needs_text": "Пожалуйста, пришлите вопрос/задание текстом.",
+        "error_question_needs_text_or_file": "Пришлите вопрос/задание текстом, фото, PDF или .docx файлом.",
+        "error_unsupported_question_format": "Неподдерживаемый формат файла. Пришлите текст, фото, PDF или .docx.",
         "error_speaking_needs_media": "Пришлите, пожалуйста, голосовое или видео-сообщение.",
+        "feedback_document_caption": "📄 Фидбек готов — файл выше.",
+        "batch_next_hint": "Пришлите следующий ответ на этот же вопрос — или нажмите «{back}», чтобы закончить.",
         "main_menu_prompt": "Главное меню:",
         "back_to_main": "Вы вернулись в главное меню.",
         "choose_language_prompt": "🌐 Выберите язык интерфейса / Tilni tanlang / Choose language:",
@@ -103,17 +112,23 @@ LOCALES: dict[str, dict[str, str]] = {
         "unit_button": "Unit {n}",
         "lesson_button": "Lesson {n}",
         "start_role_greeting": "Assalomu alaykum, {name}! Bo'limni tanlang:",
-        "student_pending": (
-            "So'rovingiz o'qituvchiga yuborildi.\n"
-            "U tasdiqlashi bilan materiallarga kirish huquqini olasiz."
+        "choose_role_prompt": "Siz kimsiz?",
+        "btn_role_student": "🎓 O'quvchiman",
+        "btn_role_teacher": "🧑‍🏫 O'qituvchiman",
+        "role_label_student": "O'quvchi",
+        "role_label_teacher": "O'qituvchi",
+        "access_pending": (
+            "So'rovingiz administratorga yuborildi.\n"
+            "U tasdiqlashi bilan kirish huquqini olasiz."
         ),
         "access_approved_notice": "✅ Sizga bot materiallariga kirish huquqi berildi!",
         "access_rejected_notice": "❌ Sizga bot materiallariga kirish huquqi berilmadi.",
         "teacher_new_request": (
             "🔔 Yangi kirish so'rovi.\n"
             "Ism: {name}\n"
-            "Telegram ID: {telegram_id}\n\n"
-            "Materiallarni ko'rish huquqini berasizmi?"
+            "Telegram ID: {telegram_id}\n"
+            "Rol: {role}\n\n"
+            "Ruxsat berasizmi?"
         ),
         "btn_approve": "✅ Ruxsat berish",
         "btn_reject": "❌ Rad etish",
@@ -150,8 +165,11 @@ LOCALES: dict[str, dict[str, str]] = {
         "error_use_buttons": "Iltimos, menyu tugmalaridan foydalaning.",
         "error_not_teacher": "Bu funksiya hozircha faqat o'qituvchi uchun mavjud.",
         "error_writing_needs_text_or_photo": "Iltimos, insho matnini yoki fotosini yuboring.",
-        "error_question_needs_text": "Iltimos, savol/topshiriqni matn ko'rinishida yuboring.",
+        "error_question_needs_text_or_file": "Savol/topshiriqni matn, foto, PDF yoki .docx fayl ko'rinishida yuboring.",
+        "error_unsupported_question_format": "Fayl formati qo'llab-quvvatlanmaydi. Matn, foto, PDF yoki .docx yuboring.",
         "error_speaking_needs_media": "Iltimos, ovozli yoki video xabar yuboring.",
+        "feedback_document_caption": "📄 Fidbek tayyor — fayl yuqorida.",
+        "batch_next_hint": "Shu savolga keyingi javobni yuboring — yoki tugatish uchun «{back}» tugmasini bosing.",
         "main_menu_prompt": "Asosiy menyu:",
         "back_to_main": "Asosiy menyuga qaytdingiz.",
         "choose_language_prompt": "🌐 Tilni tanlang / Выберите язык интерфейса / Choose language:",
@@ -171,17 +189,23 @@ LOCALES: dict[str, dict[str, str]] = {
         "unit_button": "Unit {n}",
         "lesson_button": "Lesson {n}",
         "start_role_greeting": "Hello, {name}! Choose a section:",
-        "student_pending": (
-            "Your access request has been sent to the teacher.\n"
-            "Once they approve it, you'll get access to the materials."
+        "choose_role_prompt": "Who are you?",
+        "btn_role_student": "🎓 I'm a student",
+        "btn_role_teacher": "🧑‍🏫 I'm a teacher",
+        "role_label_student": "Student",
+        "role_label_teacher": "Teacher",
+        "access_pending": (
+            "Your access request has been sent to the admin.\n"
+            "Once they approve it, you'll get access."
         ),
         "access_approved_notice": "✅ You've been granted access to the bot's materials!",
         "access_rejected_notice": "❌ You have not been granted access to the bot's materials.",
         "teacher_new_request": (
             "🔔 New access request.\n"
             "Name: {name}\n"
-            "Telegram ID: {telegram_id}\n\n"
-            "Grant access to view the materials?"
+            "Telegram ID: {telegram_id}\n"
+            "Role: {role}\n\n"
+            "Grant access?"
         ),
         "btn_approve": "✅ Approve",
         "btn_reject": "❌ Reject",
@@ -218,8 +242,11 @@ LOCALES: dict[str, dict[str, str]] = {
         "error_use_buttons": "Please use the menu buttons.",
         "error_not_teacher": "This feature is currently only available to the teacher.",
         "error_writing_needs_text_or_photo": "Please send the essay text or a photo of it.",
-        "error_question_needs_text": "Please send the question/prompt as text.",
+        "error_question_needs_text_or_file": "Please send the question/prompt as text, a photo, a PDF, or a .docx file.",
+        "error_unsupported_question_format": "Unsupported file format. Please send text, a photo, a PDF, or a .docx file.",
         "error_speaking_needs_media": "Please send a voice or video message.",
+        "feedback_document_caption": "📄 Feedback is ready — see the file above.",
+        "batch_next_hint": "Send the next answer to this same question — or press \"{back}\" to finish.",
         "main_menu_prompt": "Main menu:",
         "back_to_main": "You're back in the main menu.",
         "choose_language_prompt": "🌐 Choose language / Выберите язык интерфейса / Tilni tanlang:",

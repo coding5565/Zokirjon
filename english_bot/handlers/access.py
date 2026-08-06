@@ -1,14 +1,17 @@
 """
-Запрос и выдача доступа ученику (модель «учитель подтверждает»).
+Запрос и выдача доступа (модель «админ подтверждает»).
 
-Любой пользователь не из TEACHER_IDS после выбора языка получает role='student'
-и access_status='pending' (см. database/db.py::upsert_user). Отсюда его запрос
-уходит всем учителям из TEACHER_IDS с инлайн-кнопками Разрешить/Отклонить.
-Учитель решает — пользователь никогда не назначает себе доступ сам.
+Любой пользователь не из TEACHER_IDS после выбора языка сам указывает,
+кто он — ученик или учитель (см. handlers/common.py::role_choice_selected) —
+и получает access_status='pending' с этой ролью (см. database/db.py::
+upsert_user). Отсюда его запрос уходит всем учителям из TEACHER_IDS с
+именем/ID/заявленной ролью и инлайн-кнопками Разрешить/Отклонить. Решает
+админ — пользователь никогда не назначает себе ДОСТУП сам, только желаемую
+роль, которая активируется лишь после одобрения.
 
 Модуль не импортирует handlers.common (наоборот — common.py импортирует этот
-модуль для уведомления при регистрации нового ученика), чтобы не создавать
-циклический импорт.
+модуль для уведомления при регистрации нового пользователя), чтобы не
+создавать циклический импорт.
 """
 
 import logging
@@ -47,26 +50,32 @@ def _approval_keyboard(lang: str, student_telegram_id: int) -> InlineKeyboardMar
     )
 
 
-async def notify_teachers_new_request(context: ContextTypes.DEFAULT_TYPE, student_user) -> None:
+def _role_label(role: str, lang: str) -> str:
+    key = "role_label_teacher" if role == "teacher" else "role_label_student"
+    return t(key, lang)
+
+
+async def notify_teachers_new_request(context: ContextTypes.DEFAULT_TYPE, requester_user) -> None:
     for teacher_telegram_id in config.TEACHER_IDS:
         lang = _teacher_lang(teacher_telegram_id)
         text = t(
             "teacher_new_request",
             lang,
-            name=student_user["full_name"] or "-",
-            telegram_id=student_user["telegram_id"],
+            name=requester_user["full_name"] or "-",
+            telegram_id=requester_user["telegram_id"],
+            role=_role_label(requester_user["role"], lang),
         )
         try:
             await context.bot.send_message(
                 chat_id=teacher_telegram_id,
                 text=text,
-                reply_markup=_approval_keyboard(lang, student_user["telegram_id"]),
+                reply_markup=_approval_keyboard(lang, requester_user["telegram_id"]),
             )
-        except Exception:  # noqa: BLE001 - учитель мог не запускать бота/заблокировать его
+        except Exception:  # noqa: BLE001 - админ мог не запускать бота/заблокировать его
             logger.exception(
-                "Не удалось уведомить учителя %s о новом запросе доступа (ученик %s)",
+                "Не удалось уведомить админа %s о новом запросе доступа (пользователь %s)",
                 teacher_telegram_id,
-                student_user["telegram_id"],
+                requester_user["telegram_id"],
             )
 
 
@@ -103,13 +112,13 @@ async def handle_access_decision(update: Update, context: ContextTypes.DEFAULT_T
     except Exception:  # noqa: BLE001 - сообщение могло быть уже изменено/удалено
         pass
 
-    student_lang = target["language"]
+    target_lang = target["language"]
     if approve:
-        await context.bot.send_message(target_telegram_id, t("access_approved_notice", student_lang))
+        await context.bot.send_message(target_telegram_id, t("access_approved_notice", target_lang))
         await context.bot.send_message(
             chat_id=target_telegram_id,
-            text=t("main_menu_prompt", student_lang),
-            reply_markup=build_main_menu_keyboard(student_lang),
+            text=t("main_menu_prompt", target_lang),
+            reply_markup=build_main_menu_keyboard(target_lang),
         )
     else:
-        await context.bot.send_message(target_telegram_id, t("access_rejected_notice", student_lang))
+        await context.bot.send_message(target_telegram_id, t("access_rejected_notice", target_lang))

@@ -84,15 +84,22 @@ def upsert_user(
     full_name: str,
     role: str,
     language: Optional[str] = None,
+    force_role: bool = False,
 ) -> sqlite3.Row:
     """
-    Создаёт пользователя, если его ещё нет, либо обновляет его ФИО/роль
-    (роль всегда пересчитывается из TEACHER_IDS при каждом /start —
-    самоназначение роли не допускается).
+    Создаёт пользователя, если его ещё нет, либо обновляет его ФИО (и, если
+    force_role=True, роль).
 
-    access_status выставляется только при создании строки ('pending' для
-    ученика, иначе NULL) и никогда не трогается при обновлении — иначе
-    решение учителя (approved/rejected) сбрасывалось бы при каждом /start.
+    force_role=True — только для TEACHER_IDS-бутстрап-админов из .env: их
+    role принудительно пересчитывается в 'teacher' при каждом /start, как
+    и раньше. Для всех остальных role выставляется один раз, при создании
+    строки (это то, что пользователь выбрал в диалоге «Кто вы?» — ученик
+    или учитель), и НЕ трогается при обновлении — иначе решение админа
+    (одобрен как учитель/ученик) сбрасывалось бы при каждом следующем /start.
+
+    access_status выставляется только при создании строки: NULL для
+    force_role (бутстрап-админ, статус не используется), иначе 'pending' —
+    и тоже никогда не трогается при обновлении.
     """
     conn = get_connection()
     try:
@@ -100,7 +107,7 @@ def upsert_user(
             "SELECT * FROM users WHERE telegram_id = ?", (telegram_id,)
         ).fetchone()
         if existing is None:
-            initial_status = "pending" if role == "student" else None
+            initial_status = None if force_role else "pending"
             conn.execute(
                 """
                 INSERT INTO users (telegram_id, full_name, role, language, access_status)
@@ -108,10 +115,15 @@ def upsert_user(
                 """,
                 (telegram_id, full_name, role, language, initial_status),
             )
-        else:
+        elif force_role:
             conn.execute(
                 "UPDATE users SET full_name = ?, role = ?, language = ? WHERE telegram_id = ?",
                 (full_name, role, language, telegram_id),
+            )
+        else:
+            conn.execute(
+                "UPDATE users SET full_name = ?, language = ? WHERE telegram_id = ?",
+                (full_name, language, telegram_id),
             )
         conn.commit()
         return conn.execute(

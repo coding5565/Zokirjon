@@ -66,7 +66,7 @@ FEEDBACK_LEVEL_LABELS = dict(FEEDBACK_LEVELS)
 IELTS_LEVEL_KEYS = {"ielts_novice", "ielts"}
 
 WRITING_TASK_TYPES = [
-    ("task1", "Task 1 (Letter)"),
+    ("task1", "Task 1 (Report)"),
     ("task2", "Task 2 (Essay)"),
 ]
 WRITING_TASK_LABELS = dict(WRITING_TASK_TYPES)
@@ -108,11 +108,11 @@ You are Zakee's teaching assistant: a warm, human, encouraging writing coach who
    4. Intermediate (B1+)
    5. IELTS Novice (B1+/B2)
    6. IELTS (B2/C1)
-2. **task_type** (only sent for levels 5–6) — Task 1 (Letter) or Task 2 (Essay)
-3. **question** — the exact writing prompt/instructions the student was given
+2. **task_type** (only sent for levels 5–6) — Task 1 (Report) or Task 2 (Essay)
+3. **question** — the exact task instructions the student was given
 4. **student_text** — what the student actually wrote
 
-For levels 5–6, Task 1, if the letter's required register (formal / semi-formal / informal) isn't given explicitly, infer it from the question — GT Task 1 always specifies who the letter is to and why.
+For levels 5–6, Task 1, the question will typically come with an attached image (a bar chart, pie chart, line graph, table, process diagram, or map) — look at it carefully and judge the student's report against what the image actually shows: did they identify the key features, trends, and comparisons accurately, and give a clear overview? Don't just evaluate the writing in isolation from the data.
 
 ## THE BURGER TECHNIQUE — always structure feedback this way
 
@@ -141,22 +141,22 @@ Can write a simple connected personal letter/email describing experiences or fee
 Writes clear, connected text on familiar and some semi-formal situations (e.g. a letter requesting something or explaining a problem), achieving the intended effect reasonably well. Wider vocabulary, visible self-correction, more complex sentences attempted with some errors. Name the specific limiting habit (e.g. "you never vary your opening — try leading with the reason for writing").
 
 ### 5. IELTS Novice (B1+/B2)
-Aiming at IELTS General Training Writing but still building the control to get there. Use the band descriptors below, but frame it developmentally: "this is sitting around Band X — here's the one thing that moves it toward Y." Give an approximate band per criterion. Keep language simpler and more supportive than for level 6.
+Aiming at IELTS Academic Writing but still building the control to get there. Use the band descriptors below, but frame it developmentally: "this is sitting around Band X — here's the one thing that moves it toward Y." Give an approximate band per criterion. Keep language simpler and more supportive than for level 6.
 
 ### 6. IELTS (B2/C1)
 Full exam-standard feedback. Give a precise band per criterion, closer to how a real examiner writes — more direct, more demanding, less hand-holding. This student can take it.
 
-## IELTS GENERAL TRAINING WRITING BAND DESCRIPTORS (levels 5 & 6 only — paraphrased from the official criteria, Bands 4–9)
+## IELTS ACADEMIC WRITING BAND DESCRIPTORS (levels 5 & 6 only — paraphrased from the official criteria, Bands 4–9)
 
-### Task Achievement (Task 1 — Letter)
+### Task Achievement (Task 1 — Report)
 | Band | Description |
 |---|---|
-| **9** | Fully satisfies every requirement of the letter with precise, skilful control |
-| **8** | Covers all requirements; purpose is clear and fully developed |
-| **7** | Covers requirements with appropriate format and tone; purpose clear, occasional lack of precision |
-| **6** | Addresses requirements but some points underdeveloped; format generally appropriate |
-| **5** | Only generally addresses the task; format/tone may be inconsistent; purpose not always clear; can be repetitive |
-| **4** | Attempts the task but misses requirements; format or tone may be inappropriate throughout |
+| **9** | Fully satisfies all requirements; presents a fully developed, precise overview with all key features/comparisons highlighted accurately |
+| **8** | Covers requirements; presents a clear, appropriately highlighted overview of the main trends, differences, or stages |
+| **7** | Covers requirements; clear overview of main trends/differences/stages, though data or comparisons could be more fully or more appropriately illustrated |
+| **6** | Addresses requirements; overview present but may not be fully clear or extended; key features/comparisons adequately covered but details may be irrelevant, inappropriate, or inaccurate |
+| **5** | Generally addresses requirements; format may be inappropriate in places; overview missing or unclear; may lack overall progression through the data; recounts detail rather than giving a clear overview |
+| **4** | Fails to cover requirements; no data included or data not relevant; no clear overview; underlying trends/differences/stages not identified |
 
 ### Task Response (Task 2 — Essay)
 | Band | Description |
@@ -200,7 +200,7 @@ Full exam-standard feedback. Give a precise band per criterion, closer to how a 
 
 ## WORD COUNT
 
-IELTS GT Task 1 requires at least 150 words; Task 2 requires at least 250 words. Always check the length. If the student is under the minimum, say so plainly and note that this caps the Task Achievement/Task Response band regardless of quality — this is an official rule, not your opinion.
+IELTS Academic Task 1 requires at least 150 words; Task 2 requires at least 250 words. Always check the length. If the student is under the minimum, say so plainly and note that this caps the Task Achievement/Task Response band regardless of quality — this is an official rule, not your opinion.
 
 ## GENERAL RULES
 
@@ -340,21 +340,30 @@ _FEEDBACK_FORMAT_REMINDER = (
 # Живое тестирование показало: открытие/закрытие (пункты 1 и 3 Burger-техники)
 # скатывались в шаблонную "чирлидерскую" похвалу ("Great job!", "Keep up the good
 # work!") несмотря на прямой запрет generic-фраз в самом промпте — модель всё
-# равно тянется к ним по умолчанию. Точечное усиление уже существующего правила
-# (не новое требование), применяется всегда, а не только для IELTS.
+# равно тянется к ним по умолчанию. Заказчик отдельно попросил ужесточить именно
+# длину/глубину трёх частей (короче открытие/закрытие, глубже середина) и общую
+# аккуратность формата — это расширение того же напоминания, не новое правило.
 _NATURAL_TONE_REMINDER = (
-    "\n\n## TONE REMINDER (opening and closing beats)\n"
-    "Your opening praise and closing motivation must sound like a real teacher "
-    "reacting to this specific piece of work — not like a cheerful chatbot. Banned as "
-    'openers or closers, in any wording close to these: "Great job!", "You did a '
-    'great/nice/good job...", "Keep up the good/great work!", "You\'re on the right '
-    'track!", "I\'m excited to read/hear more from you!". Do not open by labelling '
-    "the whole piece as good/nice/great at all — skip straight to reacting to "
-    "something ACTUAL and specific the student wrote or said (quote it, or refer to "
-    "the exact idea/choice), the way a real comment would. Avoid piling up "
-    "exclamation marks. Let your phrasing vary the way one real message differs from "
-    "the next — it's fine to be brief, understated, or a little dry sometimes; warmth "
-    "doesn't require enthusiasm on every line."
+    "\n\n## TONE & LENGTH REMINDER (all three beats)\n"
+    "**Opening praise (beat 1): 1-2 short sentences, no more.** Not a long, caring "
+    "intro — a quick, genuine, specific reaction to something ACTUAL the student "
+    "wrote or said (quote it, or name the exact idea/choice), the way a real comment "
+    "would open. Banned as openers, in any wording close to these: \"Great job!\", "
+    '"You did a great/nice/good job...", "I\'m excited to read/hear more from you!". '
+    "Do not open by labelling the whole piece as good/nice/great at all.\n"
+    "**Real feedback (beat 2): go deep, not just long.** Cover every point the level "
+    "calibration above allows for this level with real specificity — don't stop at "
+    "one quick note when the level allows more. This is the substantive part; give it "
+    "the space it needs.\n"
+    "**Closing motivation (beat 3): one short line, no more.** One clear, doable next "
+    "step — not a pep talk. Banned as closers: \"Keep up the good/great work!\", "
+    "\"You're on the right track!\".\n"
+    "**Formatting**: put a blank line between each of the three beats so the message "
+    "reads as clearly separated (but still unlabeled) parts, not one dense block — "
+    "this fixes feedback that has previously come across as messy. Avoid piling up "
+    "exclamation marks anywhere. Let your phrasing vary the way one real message "
+    "differs from the next — it's fine to be brief, understated, or a little dry; "
+    "warmth doesn't require enthusiasm on every line."
 )
 
 _BILINGUAL_LANGUAGE_NAMES = {"ru": "Russian", "uz": "Uzbek"}
@@ -413,6 +422,18 @@ def _format_speaking_user_text(
     return "\n".join(lines)
 
 
+def _append_image_parts(
+    content: list[dict], images: list[tuple[bytes, str]], marker_text: str
+) -> None:
+    """Добавляет в content маркер-подпись + сами изображения (base64 data URL)."""
+    if not images:
+        return
+    content.append({"type": "text", "text": marker_text})
+    for img_bytes, img_mime in images:
+        b64 = base64.b64encode(img_bytes).decode("ascii")
+        content.append({"type": "image_url", "image_url": {"url": f"data:{img_mime};base64,{b64}"}})
+
+
 def _generate_writing_sync(
     question: str,
     text: Optional[str],
@@ -421,14 +442,22 @@ def _generate_writing_sync(
     level_key: str,
     task_type_key: Optional[str],
     lang: str,
+    question_images: Optional[list[tuple[bytes, str]]] = None,
 ) -> str:
     content: list[dict] = [
         {"type": "text", "text": _format_writing_user_text(level_key, task_type_key, question, text)}
     ]
+    _append_image_parts(
+        content,
+        question_images or [],
+        "The following image(s) are the task/question material (e.g. a Task 1 chart, "
+        "graph, table, or diagram) the student was responding to:",
+    )
     if image_bytes:
-        b64 = base64.b64encode(image_bytes).decode("ascii")
-        content.append(
-            {"type": "image_url", "image_url": {"url": f"data:{image_mime};base64,{b64}"}}
+        _append_image_parts(
+            content,
+            [(image_bytes, image_mime)],
+            "The following image is the student's own submitted work (a photo of their essay):",
         )
 
     ielts_reminder = _IELTS_WRITING_BAND_REMINDER if level_key in IELTS_LEVEL_KEYS else ""
@@ -466,9 +495,25 @@ def _generate_speaking_sync(
     level_key: str,
     test_part_key: Optional[str],
     lang: str,
+    question_images: Optional[list[tuple[bytes, str]]] = None,
 ) -> str:
     transcript_text = _transcribe_sync(media_bytes, mime_type)
-    user_text = _format_speaking_user_text(level_key, test_part_key, question, transcript_text)
+    question_images = question_images or []
+
+    if question_images:
+        user_content: str | list[dict] = [
+            {
+                "type": "text",
+                "text": _format_speaking_user_text(level_key, test_part_key, question, transcript_text),
+            }
+        ]
+        _append_image_parts(
+            user_content,
+            question_images,
+            "The following image(s) are the task/question material the student was responding to:",
+        )
+    else:
+        user_content = _format_speaking_user_text(level_key, test_part_key, question, transcript_text)
 
     ielts_reminder = _IELTS_SPEAKING_BAND_REMINDER if level_key in IELTS_LEVEL_KEYS else ""
     system_content = (
@@ -482,7 +527,7 @@ def _generate_speaking_sync(
         model=config.OPENAI_MODEL,
         messages=[
             {"role": "system", "content": system_content},
-            {"role": "user", "content": user_text},
+            {"role": "user", "content": user_content},
         ],
     )
     return response.choices[0].message.content
@@ -496,6 +541,7 @@ async def get_writing_feedback(
     level_key: str,
     task_type_key: Optional[str],
     lang: str,
+    question_images: Optional[list[tuple[bytes, str]]] = None,
 ) -> str:
     loop = asyncio.get_running_loop()
     return await loop.run_in_executor(
@@ -508,6 +554,7 @@ async def get_writing_feedback(
         level_key,
         task_type_key,
         lang,
+        question_images,
     )
 
 
@@ -518,8 +565,17 @@ async def get_speaking_feedback(
     level_key: str,
     test_part_key: Optional[str],
     lang: str,
+    question_images: Optional[list[tuple[bytes, str]]] = None,
 ) -> str:
     loop = asyncio.get_running_loop()
     return await loop.run_in_executor(
-        None, _generate_speaking_sync, question, media_bytes, mime_type, level_key, test_part_key, lang
+        None,
+        _generate_speaking_sync,
+        question,
+        media_bytes,
+        mime_type,
+        level_key,
+        test_part_key,
+        lang,
+        question_images,
     )
