@@ -385,14 +385,41 @@ _IELTS_WRITING_BAND_REMINDER = (
     "level without band numbers."
 )
 
+
+# Заказчик прямо попросил, чтобы Speaking тоже оценивался строго по критериям
+# IELTS — по аналогии с блоком "Overall Band Scores", который уже есть в
+# начале строгого Writing-разбора (см. _IELTS_WRITING_TASK1_STRUCTURE/_TASK2).
+# Полноценный построчный/попереплично-структурный разбор для Speaking не
+# делаем — заказчик не присылал под него образцов (в отличие от Writing Task
+# 1/2), поэтому основное тело фидбека остаётся Burger-техникой, но перед ним
+# теперь обязателен тот же формат явного блока с баллами. Само напоминание
+# теперь ставится в самом конце system_content (см. _generate_speaking_sync)
+# — тот же приём recency, что и с _IELTS_STRUCTURED_FORMAT_REMINDER для
+# Writing: короткая инструкция, похороненная в середине длинного промпта,
+# соблюдается заметно хуже, чем та же инструкция в самом конце.
 _IELTS_SPEAKING_BAND_REMINDER = (
-    "\n\n## OUTPUT FORMAT REMINDER (IELTS levels only)\n"
-    "This student is at an IELTS level (5 or 6), so you MUST explicitly state a Band "
-    'number (e.g. "Band 6") for EACH of Fluency and Coherence, Lexical Resource, and '
-    "Grammatical Range and Accuracy — woven naturally into your prose, not as a table "
-    "or a labeled list — and explicitly say Pronunciation was not assessed (text-only "
-    "input). Do not skip any of the three, and do not give feedback at this level "
-    "without band numbers."
+    "\n\n## OUTPUT FORMAT REMINDER (IELTS levels only) — MANDATORY LEADING BLOCK\n"
+    "This student is at an IELTS level (5 or 6). Before your Burger-technique feedback "
+    "message, give this block first, on its own, using the real official IELTS "
+    "Speaking Band Descriptors above as the actual basis, not a placeholder guess:\n"
+    "## Overall Band Scores\n"
+    "**Fluency and Coherence: X.X**\n"
+    "**Lexical Resource: X.X**\n"
+    "**Grammatical Range and Accuracy: X.X**\n"
+    "**Pronunciation: Not assessed (text-only input)**\n"
+    "**Overall Band: X.X**\n"
+    "The three scored criteria and the Overall Band must ALL be a multiple of 0.5 "
+    "(only values like 5.0, 5.5, 6.0, 6.5, 7.0 are valid — never 5.8, 6.3, or any "
+    "other decimal). Compute the Overall Band as the exact average of the THREE "
+    "assessed criteria only — Pronunciation is excluded from the average, since it "
+    "cannot be judged from a text transcript — then round that average with standard "
+    "IELTS rounding: a remainder of .25 rounds up to the next half band, a remainder "
+    "of .75 rounds up to the next whole band.\n"
+    "After this block, write your normal Burger-technique feedback message exactly as "
+    "described above — open with real praise, give the real feedback (naming these "
+    "same band numbers again naturally in prose is expected, not redundant), close "
+    "with motivation. Do not skip the Overall Band Scores block, and do not give "
+    "feedback at this level without it."
 )
 
 # По просьбе заказчика: конкретные исправления отмечать парой ❌/✅ (было
@@ -870,13 +897,15 @@ def _generate_speaking_sync(
     else:
         user_content = _format_speaking_user_text(level_key, test_part_key, question, transcript_text)
 
+    # ielts_reminder ставится последним (после bilingual_suffix) — recency-эффект,
+    # см. комментарий у _IELTS_SPEAKING_BAND_REMINDER выше.
     ielts_reminder = _IELTS_SPEAKING_BAND_REMINDER if level_key in IELTS_LEVEL_KEYS else ""
     system_content = (
         SPEAKING_SYSTEM_PROMPT
-        + ielts_reminder
         + _FEEDBACK_FORMAT_REMINDER
         + _NATURAL_TONE_REMINDER
         + _bilingual_suffix(lang)
+        + ielts_reminder
     )
     response = _get_client().chat.completions.create(
         model=config.OPENAI_MODEL,

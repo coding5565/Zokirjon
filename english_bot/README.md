@@ -257,6 +257,18 @@ english_bot/
   блока `## Overall Band Scores` (4 критерия + Overall Band, среднее с официальным
   IELTS-округлением до 0.5) — только после него идут пронумерованные секции
   1–7/paragraph-by-paragraph разбор, как раньше.
+- **Speaking (уровни 5–6) — тот же блок `## Overall Band Scores` перед фидбеком.**
+  По той же просьбе заказчика: Speaking не получил полноценного строгого
+  построчного шаблона (образцов под него не присылали, в отличие от Writing
+  Task 1/2), но теперь тоже обязан начинать ответ явным блоком — Fluency and
+  Coherence / Lexical Resource / Grammatical Range and Accuracy (все — кратные
+  0.5) + `Pronunciation: Not assessed` + Overall Band (среднее ровно 3
+  оцениваемых критериев, без Pronunciation, с официальным IELTS-округлением).
+  После блока — обычный Burger-техника фидбек, как и раньше. Само
+  напоминание (`_IELTS_SPEAKING_BAND_REMINDER`) специально поставлено в самом
+  конце `system_content`, а не сразу после `SPEAKING_SYSTEM_PROMPT` — тот же
+  приём recency, что спас формат Writing Task 1/2 от отката на прозу (см.
+  `_generate_speaking_sync`).
 - **Фидбек по чистым (без ошибок) предложениям — не комментируется вообще.**
   Section 3 («Body Paragraph») шаблона Task 1 раньше требовала хотя бы короткую
   похвалу на каждое предложение («Excellent structure.») — заказчик отметил, что это
