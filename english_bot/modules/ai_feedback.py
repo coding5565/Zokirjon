@@ -492,7 +492,25 @@ _IELTS_WRITING_TASK1_STRUCTURE = """
 For this IELTS Task 1 submission, ignore the "one warm flowing message, no labeled
 sections" instruction above entirely — use this exact structured format instead, with
 these exact section headers, in this exact order. This is a strict template, not a
-style suggestion; do not skip, merge, or reorder any of the 7 sections.
+style suggestion; do not skip, merge, or reorder the opening scores block or any of the
+7 numbered sections.
+
+## Overall Band Scores
+Give this block first, before section 1, on its own — using the real official band
+descriptors above as the actual basis, not a placeholder guess:
+**Task Achievement: X.X**
+**Coherence and Cohesion: X.X**
+**Lexical Resource: X.X**
+**Grammatical Range and Accuracy: X.X**
+**Overall Band: X.X**
+The four individual scores and the Overall Band must ALL be a multiple of 0.5 (only
+values like 5.0, 5.5, 6.0, 6.5, 7.0 are valid — never 5.8, 6.3, or any other decimal).
+Compute the Overall Band as the exact average of the four scores, then round that
+average with standard IELTS rounding: if it already lands on a multiple of 0.5, keep
+it; a remainder of .25 rounds up to the next half band; a remainder of .75 rounds up
+to the next whole band (e.g. an average of 5.75 becomes Overall Band 6.0, an average
+of 5.25 becomes 5.5, an average of 5.5 stays 5.5). Every "Estimated Band" given inside the numbered
+sections below must be consistent with — and help explain — these four scores.
 
 ### 1. Introduction
 Quote the student's introduction/paraphrase sentence(s). Then:
@@ -530,9 +548,27 @@ in order). For each sentence:
   of Task 1 error), say so plainly under "Problems" — name what the image actually
   shows and why the student's claim doesn't match it — before giving the "Better"
   rewrite.
-- If a sentence is genuinely strong, skip ❌ entirely and just give one or two words
-  of real, specific praise (e.g. "Excellent structure.\\nBand 8 grammar.") — don't
-  force a correction where none is needed.
+- Hold a high bar for what counts as a "real, fixable problem": incorrect grammar,
+  wrong tense, wrong word form/choice, a genuinely confusing/awkward phrase, or a
+  factual inaccuracy against the source data — nothing softer than that qualifies.
+  Being able to imagine a slightly more polished phrasing does NOT qualify — almost
+  any sentence can theoretically be phrased better, and that alone is not a reason to
+  comment on it. The moment you catch yourself about to write a sentence header
+  followed by a comment that concedes the sentence is "accurate", "correct", "mostly
+  right", or "fine" before adding a "but" — stop, discard that entire entry, and treat
+  the sentence as skipped instead of downgrading the comment into something softer.
+  On a genuinely well-written response, expect most or even all sentences to end up
+  with zero entries — don't manufacture a minor stylistic nitpick just so every
+  sentence gets a mention.
+- If a sentence has no real, fixable error, it must leave ZERO trace in your output:
+  no "**Sentence N**" header, no "Problems" line, no "Better", and no meta-comment
+  either — never write anything like "This sentence is accurate.", "No issues.",
+  "No need to include a comment.", or "Excellent structure." Do not acknowledge the sentence
+  existed at all; behave exactly as if you silently read past it and moved straight
+  on. Keep each remaining entry's number matching that sentence's actual position in
+  the student's paragraph (e.g. if sentences 2 and 4 are skipped, the next entry is
+  still "**Sentence 3**", not renumbered), so the student can still find it in their
+  own writing.
 
 ### 4. Sentence-by-Sentence Corrections
 A consolidated, deduplicated list of every ❌/fix pair used anywhere above, in the
@@ -564,7 +600,12 @@ complete answer, not a fragment — follow the SAMPLE ESSAY STYLE — Task 1 rul
 ### 7. Band [the "Why It Is Not Band X" target]+ Vocabulary for [the specific chart/
 report type, e.g. "Process Diagrams", "Bar Charts", "Maps"]
 A two-column "Instead of / Use" table with 6-10 rows of topic-specific upgrades from
-generic wording to precise Task 1 vocabulary."""
+generic wording to precise Task 1 vocabulary. Format it as an actual markdown table
+using pipe syntax, exactly like this shape (header row, separator row, then one row
+per pair):
+| Instead of | Use |
+|---|---|
+| word | replacement |"""
 
 _IELTS_WRITING_TASK2_STRUCTURE = """
 
@@ -573,6 +614,23 @@ _IELTS_WRITING_TASK2_STRUCTURE = """
 For this IELTS Task 2 submission, ignore the "one warm flowing message, no labeled
 sections" instruction above entirely — use this exact structured format instead. This
 is a strict template, not a style suggestion.
+
+## Overall Band Scores
+Give this block first, before the paragraph-by-paragraph corrections, on its own —
+using the real official band descriptors above as the actual basis, not a placeholder
+guess:
+**Task Response: X.X**
+**Coherence and Cohesion: X.X**
+**Lexical Resource: X.X**
+**Grammatical Range and Accuracy: X.X**
+**Overall Band: X.X**
+The four individual scores and the Overall Band must ALL be a multiple of 0.5 (only
+values like 5.0, 5.5, 6.0, 6.5, 7.0 are valid — never 5.8, 6.3, or any other decimal).
+Compute the Overall Band as the exact average of the four scores, then round that
+average with standard IELTS rounding: if it already lands on a multiple of 0.5, keep
+it; a remainder of .25 rounds up to the next half band; a remainder of .75 rounds up
+to the next whole band (e.g. an average of 5.75 becomes Overall Band 6.0, an average
+of 5.25 becomes 5.5, an average of 5.5 stays 5.5).
 
 Go through the essay paragraph by paragraph, in the order the student wrote them
 (Introduction, then each body paragraph in turn, then Conclusion), labelling each
@@ -647,6 +705,24 @@ student's), write it the way real Band 8-9 IELTS Task 2 essays are written:
   However, Despite, Nonetheless, In conclusion...) — not the same 2-3 repeated.
 - Formal register throughout — no contractions, no second-person "you."
 - Length: comfortably over 250 words (aim 280-420) — never bare-minimum."""
+
+# Живое тестирование показало: с очень длинным системным промптом (базовый
+# промпт + строгий шаблон Task1/Task2 + стиль sample-эссе + официальные band
+# descriptors, которые теперь тоже часть WRITING_SYSTEM_PROMPT) модель иногда
+# "забывает" структурный override и откатывается на исходную Burger-прозу,
+# несмотря на явное указание в начале WRITING_SYSTEM_PROMPT. Тот же приём, что
+# и с _IELTS_WRITING_BAND_REMINDER: короткое дословное напоминание в самом
+# конце системного промпта (эффект recency) заметно надёжнее, чем инструкция,
+# похороненная в середине длинного текста.
+_IELTS_STRUCTURED_FORMAT_REMINDER = (
+    "\n\n## FINAL REMINDER — STRUCTURED FORMAT IS MANDATORY FOR THIS RESPONSE\n"
+    "This is an IELTS Writing Task 1/Task 2 submission using the strict structured "
+    'override defined above. Your response MUST start with the "## Overall Band '
+    'Scores" block, then follow the exact numbered section headers given above, in '
+    "order. Do NOT fall back to a single flowing warm paragraph (the Burger "
+    "technique) for this response, under any circumstances — that format is only for "
+    "levels 1-4 and for submissions without a task_type."
+)
 
 
 def _get_client() -> OpenAI:
@@ -728,6 +804,7 @@ def _generate_writing_sync(
             + _IELTS_WRITING_TASK1_STRUCTURE
             + _SAMPLE_ESSAY_STYLE_TASK1
             + _bilingual_suffix(lang)
+            + _IELTS_STRUCTURED_FORMAT_REMINDER
         )
     elif level_key in IELTS_LEVEL_KEYS and task_type_key == "task2":
         system_content = (
@@ -735,6 +812,7 @@ def _generate_writing_sync(
             + _IELTS_WRITING_TASK2_STRUCTURE
             + _SAMPLE_ESSAY_STYLE_TASK2
             + _bilingual_suffix(lang)
+            + _IELTS_STRUCTURED_FORMAT_REMINDER
         )
     else:
         ielts_reminder = _IELTS_WRITING_BAND_REMINDER if level_key in IELTS_LEVEL_KEYS else ""
