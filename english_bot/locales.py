@@ -87,6 +87,10 @@ LOCALES: dict[str, dict[str, str]] = {
         "error_unsupported_format": "Неподдерживаемый формат файла.",
         "error_use_buttons": "Пожалуйста, используйте кнопки меню.",
         "error_not_teacher": "Эта функция пока доступна только учителю.",
+        "error_materials_teacher_only": (
+            "Материалы уроков доступны только учителю. Вам доступны Writing и "
+            "Speaking — используйте кнопки ниже."
+        ),
         "error_writing_needs_text_or_photo": "Пришлите, пожалуйста, текст или фото сочинения.",
         "error_question_needs_text_or_file": "Пришлите вопрос/задание текстом, фото, PDF или .docx файлом.",
         "error_unsupported_question_format": "Неподдерживаемый формат файла. Пришлите текст, фото, PDF или .docx.",
@@ -164,6 +168,10 @@ LOCALES: dict[str, dict[str, str]] = {
         "error_unsupported_format": "Fayl formati qo'llab-quvvatlanmaydi.",
         "error_use_buttons": "Iltimos, menyu tugmalaridan foydalaning.",
         "error_not_teacher": "Bu funksiya hozircha faqat o'qituvchi uchun mavjud.",
+        "error_materials_teacher_only": (
+            "Dars materiallari faqat o'qituvchi uchun. Sizda Writing va Speaking "
+            "mavjud — pastdagi tugmalardan foydalaning."
+        ),
         "error_writing_needs_text_or_photo": "Iltimos, insho matnini yoki fotosini yuboring.",
         "error_question_needs_text_or_file": "Savol/topshiriqni matn, foto, PDF yoki .docx fayl ko'rinishida yuboring.",
         "error_unsupported_question_format": "Fayl formati qo'llab-quvvatlanmaydi. Matn, foto, PDF yoki .docx yuboring.",
@@ -241,6 +249,10 @@ LOCALES: dict[str, dict[str, str]] = {
         "error_unsupported_format": "Unsupported file format.",
         "error_use_buttons": "Please use the menu buttons.",
         "error_not_teacher": "This feature is currently only available to the teacher.",
+        "error_materials_teacher_only": (
+            "Lesson materials are only available to teachers. You have access to "
+            "Writing and Speaking — use the buttons below."
+        ),
         "error_writing_needs_text_or_photo": "Please send the essay text or a photo of it.",
         "error_question_needs_text_or_file": "Please send the question/prompt as text, a photo, a PDF, or a .docx file.",
         "error_unsupported_question_format": "Unsupported file format. Please send text, a photo, a PDF, or a .docx file.",

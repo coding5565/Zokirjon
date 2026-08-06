@@ -20,7 +20,7 @@ import config
 from database import db
 from handlers import access
 from locales import t
-from modules.content_tree import build_main_menu_keyboard
+from modules.content_tree import build_main_menu_keyboard, build_student_menu_keyboard
 
 logger = logging.getLogger(__name__)
 
@@ -172,11 +172,14 @@ async def _enter_main_screen(chat_id: int, context: ContextTypes.DEFAULT_TYPE, u
 
     status = user["access_status"]
     if status == "approved":
+        # Одобренный, но не учитель — материалы (Level→Unit→Lesson) ему больше
+        # не показываются, только Writing/Speaking (прямая просьба заказчика,
+        # см. content_tree.build_student_menu_keyboard).
         greeting = t("start_role_greeting", lang, name=user["full_name"] or "")
         await context.bot.send_message(
             chat_id=chat_id,
             text=greeting,
-            reply_markup=build_main_menu_keyboard(lang),
+            reply_markup=build_student_menu_keyboard(lang),
         )
     elif status == "rejected":
         await context.bot.send_message(

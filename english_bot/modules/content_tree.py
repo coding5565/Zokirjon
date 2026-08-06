@@ -29,13 +29,25 @@ def level_display_name(level: str) -> str:
 
 
 def build_main_menu_keyboard(lang: str) -> ReplyKeyboardMarkup:
-    """Главное меню учителя: 2 столбца, как задано в ТЗ 5.2."""
+    """Главное меню учителя (2 столбца, как задано в ТЗ 5.2) — включает материалы Level→Unit→Lesson."""
     rows = [
         [t("btn_beginner", lang), t("btn_elementary", lang)],
         [t("btn_pre_intermediate", lang), t("btn_intermediate", lang)],
         [t("btn_writing", lang), t("btn_speaking", lang)],
     ]
     return ReplyKeyboardMarkup(rows, resize_keyboard=True)
+
+
+def build_student_menu_keyboard(lang: str) -> ReplyKeyboardMarkup:
+    """
+    Главное меню одобренного ученика — только Writing и Speaking, без доступа
+    к материалам уроков (Level→Unit→Lesson). По прямой просьбе заказчика:
+    материалы — только для учителя, ученику видны исключительно эти 2 кнопки
+    (раньше у одобренного ученика был read-only доступ к материалам тоже —
+    от этого отказались, см. handlers/teacher.py::handle_navigation_text и
+    README).
+    """
+    return ReplyKeyboardMarkup([[t("btn_writing", lang), t("btn_speaking", lang)]], resize_keyboard=True)
 
 
 def build_units_keyboard(lang: str) -> ReplyKeyboardMarkup:

@@ -1,18 +1,18 @@
 """
-Навигация Level -> Unit -> Lesson (общая для учителя и одобренного ученика),
-добавление/изменение домашнего задания (только учитель), а также приём и
-проверка Writing/Speaking (учитель и одобренный ученик).
+Навигация Level -> Unit -> Lesson (только учитель), добавление/изменение
+домашнего задания (только учитель), а также приём и проверка Writing/Speaking
+(учитель и одобренный ученик).
 
 Навигация по дереву (уровень/юнит/урок и «Назад») реализована обычным
 MessageHandler'ом поверх context.user_data — глубина дерева фиксирована и
-переходы линейны, полноценный ConversationHandler здесь избыточен. Это ОДИН
-хендлер на оба типа пользователей (не два параллельных): у учителя и ученика
-кнопки называются одинаково («Beginner», «Unit 3», «Назад» ...), поэтому
-различить, кто именно нажал, можно только по роли отправителя — если бы это
-были два раздельных MessageHandler'а с одинаковым текстовым фильтром, порядок
-регистрации решал бы, кто перехватит апдейт, а не отправитель. Роль
-разрешается один раз в начале handle_navigation_text, и от неё зависит только
-editable-флаг при показе урока (см. modules/content_tree.py::send_lesson_view).
+переходы линейны, полноценный ConversationHandler здесь избыточен.
+handle_navigation_text — общая точка входа для любого текста от любого
+пользователя, но сама навигация по дереву материалов доступна только
+активному учителю (common.is_active_teacher); не-учитель получает
+error_materials_teacher_only и клавиатуру со студенческим меню. Раньше
+одобренный ученик тоже видел материалы в read-only режиме (editable=False) —
+по прямой просьбе заказчика от этого отказались: ученику видны только
+Writing/Speaking (см. modules/content_tree.py::build_student_menu_keyboard).
 
 Add/Edit HW, Writing и Speaking обёрнуты в ConversationHandler: каждый из них
 ждёт следующее сообщение(-я) пользователя как единый акт ввода (ТЗ, раздел
@@ -214,14 +214,19 @@ async def handle_navigation_text(update: Update, context: ContextTypes.DEFAULT_T
 
     lang = user["language"]
 
-    if common.is_active_teacher(telegram_id, user):
-        editable = True
-    elif user["access_status"] == "approved":
-        editable = False
-    else:
-        status = user["access_status"]
-        message_key = "access_rejected_notice" if status == "rejected" else "access_pending"
-        await update.message.reply_text(t(message_key, lang))
+    if not common.is_active_teacher(telegram_id, user):
+        # Материалы (Level→Unit→Lesson) теперь видит только учитель — заказчик
+        # прямо попросил убрать их у ученика (раньше был read-only просмотр).
+        # Эта ветка ловит и случайный текст, и «зависшую» старую клавиатуру.
+        if user["access_status"] == "approved":
+            await update.message.reply_text(
+                t("error_materials_teacher_only", lang),
+                reply_markup=content_tree.build_student_menu_keyboard(lang),
+            )
+        else:
+            status = user["access_status"]
+            message_key = "access_rejected_notice" if status == "rejected" else "access_pending"
+            await update.message.reply_text(t(message_key, lang))
         return
 
     text = update.message.text
@@ -262,7 +267,9 @@ async def handle_navigation_text(update: Update, context: ContextTypes.DEFAULT_T
     lesson_number = content_tree.parse_lesson_number(text)
     if lesson_number is not None:
         lesson = db.get_lesson(nav_level, nav_unit, lesson_number)
-        await content_tree.send_lesson_view(context.bot, chat_id, lang, lesson, editable=editable)
+        # Дальше этой точки доходит только учитель (см. проверку выше) — editable
+        # всегда True, отдельного read-only режима для ученика больше нет.
+        await content_tree.send_lesson_view(context.bot, chat_id, lang, lesson, editable=True)
         return
 
     await update.message.reply_text(t("error_use_buttons", lang))

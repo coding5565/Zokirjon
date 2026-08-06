@@ -22,7 +22,7 @@ from telegram.ext import ContextTypes
 import config
 from database import db
 from locales import t
-from modules.content_tree import build_main_menu_keyboard
+from modules.content_tree import build_main_menu_keyboard, build_student_menu_keyboard
 
 logger = logging.getLogger(__name__)
 
@@ -114,11 +114,18 @@ async def handle_access_decision(update: Update, context: ContextTypes.DEFAULT_T
 
     target_lang = target["language"]
     if approve:
+        # Материалы (Level→Unit→Lesson) — только для роли 'teacher'; одобренный
+        # 'student' видит только Writing/Speaking (см. content_tree.py).
+        menu_keyboard = (
+            build_main_menu_keyboard(target_lang)
+            if target["role"] == "teacher"
+            else build_student_menu_keyboard(target_lang)
+        )
         await context.bot.send_message(target_telegram_id, t("access_approved_notice", target_lang))
         await context.bot.send_message(
             chat_id=target_telegram_id,
             text=t("main_menu_prompt", target_lang),
-            reply_markup=build_main_menu_keyboard(target_lang),
+            reply_markup=menu_keyboard,
         )
     else:
         await context.bot.send_message(target_telegram_id, t("access_rejected_notice", target_lang))
