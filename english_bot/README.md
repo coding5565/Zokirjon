@@ -252,6 +252,20 @@ english_bot/
   присылали) продолжают использовать прежний Burger-прозовый формат без изменений.
   Стиль итогового Sample/Model Essay в конце разбора тоже не придуман, а выведен из
   присланного сборника образцовых работ (`_SAMPLE_ESSAY_STYLE_TASK1`/`_TASK2`).
+- **Band-дескрипторы IELTS Writing/Speaking — официальный текст IELTS.org, не
+  парафраз.** Заказчик прислал официальные PDF (IELTS Writing Band Descriptors и
+  IELTS Speaking Band Descriptors, «Updated May 2023») и попросил оценивать именно
+  по ним. Таблицы в `WRITING_SYSTEM_PROMPT`/`SPEAKING_SYSTEM_PROMPT`
+  (`modules/ai_feedback.py`) заменены дословным текстом этих документов, полная
+  шкала Band 0–9 по каждому критерию (Task Achievement/Task Response — раздельно
+  для Task 1 и Task 2, так как официальный текст для них разный; Coherence and
+  Cohesion — тоже раздельно по той же причине; Lexical Resource и Grammatical Range
+  — общие таблицы, текст в обоих документах идентичен; для Speaking — все 4
+  критерия, включая Pronunciation). Область действия не изменилась: только
+  `ielts_novice`/`ielts`, уровни 1–4 по-прежнему не видят баллов и терминологии
+  IELTS вообще. Pronunciation по-прежнему не оценивается по одному транскрипту без
+  аудио — официальная таблица оставлена для справки, но модели прямо запрещено
+  придумывать по ней балл (см. `## IMPORTANT LIMITATION` в `SPEAKING_SYSTEM_PROMPT`).
 - **ИИ-провайдер — OpenAI, а не Gemini.** Исходное ТЗ (раздел 2) явно требовало
   `google-genai`. У заказчика на момент разработки был доступен только ключ OpenAI,
   поэтому по его прямому решению `modules/ai_feedback.py` реализован на OpenAI SDK

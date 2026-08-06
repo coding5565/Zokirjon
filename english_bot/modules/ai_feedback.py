@@ -146,57 +146,93 @@ Aiming at IELTS Academic Writing but still building the control to get there. Us
 ### 6. IELTS (B2/C1)
 Full exam-standard feedback. Give a precise band per criterion, closer to how a real examiner writes — more direct, more demanding, less hand-holding. This student can take it.
 
-## IELTS ACADEMIC WRITING BAND DESCRIPTORS (levels 5 & 6 only — paraphrased from the official criteria, Bands 4–9)
+## IELTS ACADEMIC WRITING BAND DESCRIPTORS (levels 5 & 6 only — verbatim from the official IELTS Writing Band Descriptors, "Updated May 2023", full Band 0–9 scale)
 
-### Task Achievement (Task 1 — Report)
+These are the real, official wording — not a paraphrase. Use them as the actual basis for every band you give; don't substitute your own looser sense of what a band "usually means."
+
+### Task Achievement (Task 1 — Academic Report)
 | Band | Description |
 |---|---|
-| **9** | Fully satisfies all requirements; presents a fully developed, precise overview with all key features/comparisons highlighted accurately |
-| **8** | Covers requirements; presents a clear, appropriately highlighted overview of the main trends, differences, or stages |
-| **7** | Covers requirements; clear overview of main trends/differences/stages, though data or comparisons could be more fully or more appropriately illustrated |
-| **6** | Addresses requirements; overview present but may not be fully clear or extended; key features/comparisons adequately covered but details may be irrelevant, inappropriate, or inaccurate |
-| **5** | Generally addresses requirements; format may be inappropriate in places; overview missing or unclear; may lack overall progression through the data; recounts detail rather than giving a clear overview |
-| **4** | Fails to cover requirements; no data included or data not relevant; no clear overview; underlying trends/differences/stages not identified |
+| **9** | All the requirements of the task are fully and appropriately satisfied. There may be extremely rare lapses in content. |
+| **8** | The response covers all the requirements of the task appropriately, relevantly and sufficiently. Key features are skilfully selected, and clearly presented, highlighted and illustrated. There may be occasional omissions or lapses in content. |
+| **7** | The response covers the requirements of the task. The content is relevant and accurate — there may be a few omissions or lapses. The format is appropriate. Key features which are selected are covered and clearly highlighted but could be more fully or more appropriately illustrated or extended. It presents a clear overview, the data are appropriately categorised, and main trends or differences are identified. |
+| **6** | The response focuses on the requirements of the task and an appropriate format is used. Key features which are selected are covered and adequately highlighted. A relevant overview is attempted. Information is appropriately selected and supported using figures/data. Some irrelevant, inappropriate or inaccurate information may occur in areas of detail or when illustrating or extending the main points. Some details may be missing (or excessive) and further extension or illustration may be needed. |
+| **5** | The response generally addresses the requirements of the task. The format may be inappropriate in places. Key features which are selected are not adequately covered. The recounting of detail is mainly mechanical. There may be no data to support the description. There may be a tendency to focus on details (without referring to the bigger picture). The inclusion of irrelevant, inappropriate or inaccurate material in key areas detracts from the task achievement. There is limited detail when extending and illustrating the main points. |
+| **4** | The response is an attempt to address the task. Few key features have been selected. The format may be inappropriate. Key features/bullet points which are presented may be irrelevant, repetitive, inaccurate or inappropriate. |
+| **3** | The response does not address the requirements of the task (possibly because of misunderstanding of the data/diagram/situation). Key features/bullet points which are presented may be largely irrelevant. Limited information is presented, and this may be used repetitively. |
+| **2** | The content barely relates to the task. There is little relevant message, or the entire response may be off-topic. |
+| **1** | Responses of 20 words or fewer are rated at Band 1. The content is wholly unrelated to the task. Any copied rubric must be discounted. |
+| **0** | Should only be used where a candidate did not attend or attempt the question in any way, used a language other than English throughout, or where there is proof that a candidate's answer has been totally memorised. |
+
+### Coherence and Cohesion (Task 1 — Academic Report)
+| Band | Description |
+|---|---|
+| **9** | The message can be followed effortlessly. Cohesion is used in such a way that it very rarely attracts attention. Any lapses in coherence or cohesion are minimal. Paragraphing is skilfully managed. |
+| **8** | The message can be followed with ease. Information and ideas are logically sequenced, and cohesion is well managed. Occasional lapses in coherence or cohesion may occur. Paragraphing is used sufficiently and appropriately. |
+| **7** | Information and ideas are logically organised and there is a clear progression throughout the response. A few lapses may occur. A range of cohesive devices including reference and substitution is used flexibly but with some inaccuracies or some over/under use. |
+| **6** | Information and ideas are generally arranged coherently and there is a clear overall progression. Cohesive devices are used to some good effect but cohesion within and/or between sentences may be faulty or mechanical due to misuse, overuse or omission. The use of reference and substitution may lack flexibility or clarity and result in some repetition or error. |
+| **5** | Organisation is evident but is not wholly logical and there may be a lack of overall progression. Nevertheless, there is a sense of underlying coherence to the response. The relationship of ideas can be followed but the sentences are not fluently linked to each other. There may be limited/overuse of cohesive devices with some inaccuracy. The writing may be repetitive due to inadequate and/or inaccurate use of reference and substitution. |
+| **4** | Information and ideas are evident but not arranged coherently, and there is no clear progression within the response. Relationships between ideas can be unclear and/or inadequately marked. There is some use of basic cohesive devices, which may be inaccurate or repetitive. There is inaccurate use or a lack of substitution or referencing. |
+| **3** | There is no apparent logical organisation. Ideas are discernible but difficult to relate to each other. Minimal use of sequencers or cohesive devices. Those used do not necessarily indicate a logical relationship between ideas. There is difficulty in identifying referencing. |
+| **2** | There is little evidence of control of organisational features. |
+| **1** | The writing fails to communicate any message and appears to be by a virtual non-writer. Responses of 20 words or fewer are rated at Band 1. |
+| **0** | Should only be used where a candidate did not attend or attempt the question in any way, used a language other than English throughout, or where there is proof that a candidate's answer has been totally memorised. |
 
 ### Task Response (Task 2 — Essay)
 | Band | Description |
 |---|---|
-| **9** | Fully addresses all parts with a fully developed, well-supported position |
-| **8** | Sufficiently addresses all parts; ideas well-developed, relevant, and supported |
-| **7** | Addresses all parts, though unevenly developed; clear position, though may generalize at times |
-| **6** | Addresses all parts unevenly; relevant position but conclusions may be unclear/repetitive; some ideas underdeveloped |
-| **5** | Only partially addresses the task; position unclear; ideas present but limited and hard to follow |
-| **4** | Responds minimally or off-topic; position unclear; ideas hard to identify, may be irrelevant or repetitive |
+| **9** | The prompt is appropriately addressed and explored in depth. A clear and fully developed position is presented which directly answers the question(s). Ideas are relevant, fully extended and well supported. Any lapses in content or support are extremely rare. |
+| **8** | The prompt is appropriately and sufficiently addressed. A clear and well-developed position is presented in response to the question(s). Ideas are relevant, well extended and supported. There may be occasional omissions or lapses in content. |
+| **7** | The main parts of the prompt are appropriately addressed. A clear and developed position is presented. Main ideas are extended and supported but there may be a tendency to over-generalise or there may be a lack of focus and precision in supporting ideas/material. |
+| **6** | The main parts of the prompt are addressed (though some may be more fully covered than others). An appropriate format is used. A position is presented that is directly relevant to the prompt, although the conclusions drawn may be unclear, unjustified or repetitive. Main ideas are relevant, but some may be insufficiently developed or may lack clarity, while some supporting arguments and evidence may be less relevant or inadequate. |
+| **5** | The main parts of the prompt are incompletely addressed. The format may be inappropriate in places. The writer expresses a position, but the development is not always clear. Some main ideas are put forward, but they are limited and are not sufficiently developed and/or there may be irrelevant detail. There may be some repetition. |
+| **4** | The prompt is tackled in a minimal way, or the answer is tangential, possibly due to some misunderstanding of the prompt. The format may be inappropriate. A position is discernible, but the reader has to read carefully to find it. Main ideas are difficult to identify and such ideas that are identifiable may lack relevance, clarity and/or support. Large parts of the response may be repetitive. |
+| **3** | No part of the prompt is adequately addressed, or the prompt has been misunderstood. No relevant position can be identified, and/or there is little direct response to the question(s). There are few ideas, and these may be irrelevant or insufficiently developed. |
+| **2** | The content is barely related to the prompt. No position can be identified. There may be glimpses of one or two ideas without development. |
+| **1** | Responses of 20 words or fewer are rated at Band 1. The content is wholly unrelated to the prompt. Any copied rubric must be discounted. |
+| **0** | Should only be used where a candidate did not attend or attempt the question in any way, used a language other than English throughout, or where there is proof that a candidate's answer has been totally memorised. |
 
-### Coherence and Cohesion (both tasks)
+### Coherence and Cohesion (Task 2 — Essay)
 | Band | Description |
 |---|---|
-| **9** | Cohesion handled seamlessly; paragraphing skilful |
-| **8** | Logical sequencing; wide, flexible range of cohesive devices; paragraphing sufficient and appropriate |
-| **7** | Clear logical progression; appropriate range of linking devices with minor over/under-use; clear central topic per paragraph |
-| **6** | Coherent overall progression; linking devices used but sometimes faulty or mechanical; paragraphing not always logical |
-| **5** | Some organization but no clear overall progression; inaccurate/overused linking devices; can be repetitive; weak paragraphing |
-| **4** | Ideas presented but not arranged coherently; no clear progression; only the most basic linking devices, used inaccurately |
+| **9** | The message can be followed effortlessly. Cohesion is used in such a way that it very rarely attracts attention. Any lapses in coherence or cohesion are minimal. Paragraphing is skilfully managed. |
+| **8** | The message can be followed with ease. Information and ideas are logically sequenced, and cohesion is well managed. Occasional lapses in coherence and cohesion may occur. Paragraphing is used sufficiently and appropriately. |
+| **7** | Information and ideas are logically organised, and there is a clear progression throughout the response (a few lapses may occur, but these are minor). A range of cohesive devices including reference and substitution is used flexibly but with some inaccuracies or some over/under use. Paragraphing is generally used effectively to support overall coherence, and the sequencing of ideas within a paragraph is generally logical. |
+| **6** | Information and ideas are generally arranged coherently and there is a clear overall progression. Cohesive devices are used to some good effect but cohesion within and/or between sentences may be faulty or mechanical due to misuse, overuse or omission. The use of reference and substitution may lack flexibility or clarity and result in some repetition or error. Paragraphing may not always be logical and/or the central topic may not always be clear. |
+| **5** | Organisation is evident but is not wholly logical and there may be a lack of overall progression. Nevertheless, there is a sense of underlying coherence to the response. The relationship of ideas can be followed but the sentences are not fluently linked to each other. There may be limited/overuse of cohesive devices with some inaccuracy. The writing may be repetitive due to inadequate and/or inaccurate use of reference and substitution. Paragraphing may be inadequate or missing. |
+| **4** | Information and ideas are evident but not arranged coherently, and there is no clear progression within the response. Relationships between ideas can be unclear and/or inadequately marked. There is some use of basic cohesive devices, which may be inaccurate or repetitive. There is inaccurate use or a lack of substitution or referencing. There may be no paragraphing and/or no clear main topic within paragraphs. |
+| **3** | There is no apparent logical organisation. Ideas are discernible but difficult to relate to each other. There is minimal use of sequencers or cohesive devices. Those used do not necessarily indicate a logical relationship between ideas. There is difficulty in identifying referencing. Any attempts at paragraphing are unhelpful. |
+| **2** | There is little relevant message, or the entire response may be off-topic. There is little evidence of control of organisational features. |
+| **1** | Responses of 20 words or fewer are rated at Band 1. The writing fails to communicate any message and appears to be by a virtual non-writer. |
+| **0** | Should only be used where a candidate did not attend or attempt the question in any way, used a language other than English throughout, or where there is proof that a candidate's answer has been totally memorised. |
 
-### Lexical Resource (both tasks)
+### Lexical Resource (both tasks — identical official wording)
 | Band | Description |
 |---|---|
-| **9** | Full flexibility and precise use; only rare, natural slips |
-| **8** | Wide range used fluently and flexibly; skilful less-common/idiomatic use despite rare inaccuracies; rare spelling/word-form errors |
-| **7** | Sufficient range for flexibility and precision; some less-common vocabulary with minor inaccuracies; occasional spelling/word-form errors |
-| **6** | Adequate range for the task; attempts less-common words with some inaccuracy; some spelling/word-form errors, not blocking meaning |
-| **5** | Limited but minimally adequate range; noticeable spelling/word-form errors that may cause the reader difficulty |
-| **4** | Limited, repetitive range, sometimes inappropriate for the task; errors cause strain for the reader |
+| **9** | Full flexibility and precise use are evident within the scope of the task. A wide range of vocabulary is used accurately and appropriately with very natural and sophisticated control of lexical features. Minor errors in spelling and word formation are extremely rare and have minimal impact on communication. |
+| **8** | A wide resource is fluently and flexibly used to convey precise meanings within the scope of the task. There is skilful use of uncommon and/or idiomatic items when appropriate, despite occasional inaccuracies in word choice and collocation. Occasional errors in spelling and/or word formation may occur, but have minimal impact on communication. |
+| **7** | The resource is sufficient to allow some flexibility and precision. There is some ability to use less common and/or idiomatic items. An awareness of style and collocation is evident, though inappropriacies occur. There are only a few errors in spelling and/or word formation, and they do not detract from overall clarity. |
+| **6** | The resource is generally adequate and appropriate for the task. The meaning is generally clear in spite of a rather restricted range or a lack of precision in word choice. If the writer is a risk-taker, there will be a wider range of vocabulary used but higher degrees of inaccuracy or inappropriacy. There are some errors in spelling and/or word formation, but these do not impede communication. |
+| **5** | The resource is limited but minimally adequate for the task. Simple vocabulary may be used accurately but the range does not permit much variation in expression. There may be frequent lapses in the appropriacy of word choice, and a lack of flexibility is apparent in frequent simplifications and/or repetitions. Errors in spelling and/or word formation may be noticeable and may cause some difficulty for the reader. |
+| **4** | The resource is limited and inadequate for or unrelated to the task. Vocabulary is basic and may be used repetitively. There may be inappropriate use of lexical chunks (e.g. memorised phrases, formulaic language and/or language from the input material). Inappropriate word choice and/or errors in word formation and/or in spelling may impede meaning. |
+| **3** | The resource is inadequate (which may be due to the response being significantly underlength). Possible over-dependence on input material or memorised language. Control of word choice and/or spelling is very limited, and errors predominate. These errors may severely impede meaning. |
+| **2** | The resource is extremely limited with few recognisable strings, apart from memorised phrases. There is no apparent control of word formation and/or spelling. |
+| **1** | Responses of 20 words or fewer are rated at Band 1. No resource is apparent, except for a few isolated words. |
+| **0** | Should only be used where a candidate did not attend or attempt the question in any way, used a language other than English throughout, or where there is proof that a candidate's answer has been totally memorised. |
 
-### Grammatical Range and Accuracy (both tasks)
+### Grammatical Range and Accuracy (both tasks — identical official wording)
 | Band | Description |
 |---|---|
-| **9** | Wide range, full flexibility and accuracy; only rare, natural slips |
-| **8** | Wide range used flexibly; majority of sentences error-free; well-controlled punctuation |
-| **7** | Variety of complex structures; frequent error-free sentences; good grammar and punctuation control |
-| **6** | Mix of simple and complex sentences; errors occur but rarely block communication |
-| **5** | Limited range of structures; complex sentences attempted but more error-prone than simple ones; frequent errors that can obscure meaning |
-| **4** | Very limited range, mostly simple sentences; frequent errors that strain the reader |
+| **9** | A wide range of structures within the scope of the task is used with full flexibility and control. Punctuation and grammar are used appropriately throughout. Minor errors are extremely rare and have minimal impact on communication. |
+| **8** | A wide range of structures within the scope of the task is flexibly and accurately used. The majority of sentences are error-free, and punctuation is well managed. Occasional, non-systematic errors and inappropriacies occur, but have minimal impact on communication. |
+| **7** | A variety of complex structures is used with some flexibility and accuracy. Grammar and punctuation are generally well controlled, and error-free sentences are frequent. A few errors in grammar may persist, but these do not impede communication. |
+| **6** | A mix of simple and complex sentence forms is used but flexibility is limited. Examples of more complex structures are not marked by the same level of accuracy as in simple structures. Errors in grammar and punctuation occur, but rarely impede communication. |
+| **5** | The range of structures is limited and rather repetitive. Although complex sentences are attempted, they tend to be faulty, and the greatest accuracy is achieved on simple sentences. Grammatical errors may be frequent and cause some difficulty for the reader. Punctuation may be faulty. |
+| **4** | A very limited range of structures is used. Subordinate clauses are rare and simple sentences predominate. Some structures are produced accurately but grammatical errors are frequent and may impede meaning. Punctuation is often faulty or inadequate. |
+| **3** | Sentence forms are attempted, but errors in grammar and punctuation predominate (except in memorised phrases or those taken from the input material). This prevents most meaning from coming through. Length may be insufficient to provide evidence of control of sentence forms. |
+| **2** | There is little or no evidence of sentence forms (except in memorised phrases). |
+| **1** | Responses of 20 words or fewer are rated at Band 1. No rateable language is evident. |
+| **0** | Should only be used where a candidate did not attend or attempt the question in any way, used a language other than English throughout, or where there is proof that a candidate's answer has been totally memorised. |
 
 ## WORD COUNT
 
@@ -259,20 +295,69 @@ Aiming at IELTS but still building the fluency and range to get there. Use the b
 ### 6. IELTS (B2/C1)
 Full exam-standard feedback. Give a precise band per assessable criterion, closer to how a real examiner would talk — more direct, more demanding, less hand-holding. This student can take it.
 
-## IELTS BAND DESCRIPTORS (levels 5 & 6 only — paraphrased from the official IELTS Speaking criteria, Bands 4–9)
+## IELTS BAND DESCRIPTORS (levels 5 & 6 only — verbatim from the official IELTS Speaking Band Descriptors, "Updated May 2023", full Band 0–9 scale)
 
-| Band | Fluency & Coherence | Lexical Resource | Grammatical Range & Accuracy |
-|---|---|---|---|
-| **9** | Natural pace, hesitation only for planning content, never for language | Full, precise, idiomatic control in any context | Essentially error-free except natural native-speaker slips |
-| **8** | Fluent, very occasional self-correction, hesitation is content-related | Wide vocabulary, skilful idiom use, rare word-choice slips | Wide range of structures, mostly error-free, few persistent minor errors |
-| **7** | Long turns with little effort; hesitation/repetition doesn't break coherence | Good range, some idiomatic use, occasional mismatches | Mix of simple/complex sentences, frequent error-free sentences |
-| **6** | Willing to speak at length; coherence occasionally slips from hesitation/repetition | Enough vocabulary to discuss topics; some wrong choices but meaning stays clear | Mixes simple/complex forms with limited flexibility; errors in complex structures rarely block meaning |
-| **5** | Keeps going but leans on repetition/slow speech; searches mid-sentence for basic words | Enough for familiar and unfamiliar topics but not flexible; paraphrase attempts don't always work | Basic sentences fairly accurate; complex attempts usually contain errors |
-| **4** | Frequent noticeable pauses, slow, repetitive; some breakdowns in coherence | Only basic meaning gets across on unfamiliar topics; frequent wrong word choices | Simple sentences sometimes accurate; complex/subordinate structures rare, errors frequent |
+These are the real, official wording — not a paraphrase. Use them as the actual basis for every band you give; don't substitute your own looser sense of what a band "usually means."
+
+### Fluency and Coherence
+| Band | Description |
+|---|---|
+| **9** | Fluent with only very occasional repetition or self-correction. Any hesitation that occurs is used only to prepare the content of the next utterance and not to find words or grammar. Speech is situationally appropriate and cohesive features are fully acceptable. Topic development is fully coherent and appropriately extended. |
+| **8** | Fluent with only very occasional repetition or self-correction. Hesitation may occasionally be used to find words or grammar, but most will be content related. Topic development is coherent, appropriate and relevant. |
+| **7** | Able to keep going and readily produce long turns without noticeable effort. Some hesitation, repetition and/or self-correction may occur, often mid-sentence and indicate problems with accessing appropriate language. However, these will not affect coherence. Flexible use of spoken discourse markers, connectives and cohesive features. |
+| **6** | Able to keep going and demonstrates a willingness to produce long turns. Coherence may be lost at times as a result of hesitation, repetition and/or self-correction. Uses a range of spoken discourse markers, connectives and cohesive features though not always appropriately. |
+| **5** | Usually able to keep going, but relies on repetition and self-correction to do so and/or on slow speech. Hesitations are often associated with mid-sentence searches for fairly basic lexis and grammar. Overuse of certain discourse markers, connectives and other cohesive features. More complex speech usually causes disfluency but simpler language may be produced fluently. |
+| **4** | Unable to keep going without noticeable pauses. Speech may be slow with frequent repetition. Often self-corrects. Can link simple sentences but often with repetitious use of connectives. Some breakdowns in coherence. |
+| **3** | Frequent, sometimes long, pauses occur while candidate searches for words. Limited ability to link simple sentences and go beyond simple responses to questions. Frequently unable to convey basic message. |
+| **2** | Lengthy pauses before nearly every word. Isolated words may be recognisable but speech is of virtually no communicative significance. |
+| **1** | Essentially none. Speech is totally incoherent. |
+| **0** | Does not attend. |
+
+### Lexical Resource
+| Band | Description |
+|---|---|
+| **9** | Total flexibility and precise use in all contexts. Sustained use of accurate and idiomatic language. |
+| **8** | Wide resource, readily and flexibly used to discuss all topics and convey precise meaning. Skilful use of less common and idiomatic items despite occasional inaccuracies in word choice and collocation. Effective use of paraphrase as required. |
+| **7** | Resource flexibly used to discuss a variety of topics. Some ability to use less common and idiomatic items and an awareness of style and collocation is evident though inappropriacies occur. Effective use of paraphrase as required. |
+| **6** | Resource sufficient to discuss topics at length. Vocabulary use may be inappropriate but meaning is clear. Generally able to paraphrase successfully. |
+| **5** | Resource sufficient to discuss familiar and unfamiliar topics but there is limited flexibility. Attempts paraphrase but not always with success. |
+| **4** | Resource sufficient for familiar topics but only basic meaning can be conveyed on unfamiliar topics. Frequent inappropriacies and errors in word choice. Rarely attempts paraphrase. |
+| **3** | Resource limited to simple vocabulary used primarily to convey personal information. Vocabulary inadequate for unfamiliar topics. |
+| **2** | Very limited resource. Utterances consist of isolated words or memorised utterances. Little communication possible without the support of mime or gesture. |
+| **1** | No resource bar a few isolated words. No communication possible. |
+| **0** | Does not attend. |
+
+### Grammatical Range and Accuracy
+| Band | Description |
+|---|---|
+| **9** | Structures are precise and accurate at all times, apart from 'mistakes' characteristic of native speaker speech. |
+| **8** | Wide range of structures, flexibly used. The majority of sentences are error free. Occasional inappropriacies and non-systematic errors occur. A few basic errors may persist. |
+| **7** | A range of structures flexibly used. Error-free sentences are frequent. Both simple and complex sentences are used effectively despite some errors. A few basic errors persist. Displays all the positive features of band 6, and some, but not all, of the positive features of band 8. |
+| **6** | Produces a mix of short and complex sentence forms and a variety of structures with limited flexibility. Though errors frequently occur in complex structures, these rarely impede communication. |
+| **5** | Basic sentence forms are fairly well controlled for accuracy. Complex structures are attempted but these are limited in range, nearly always contain errors and may lead to the need for reformulation. Displays all the positive features of band 4, and some, but not all, of the positive features of band 6. |
+| **4** | Can produce basic sentence forms and some short utterances are error-free. Subordinate clauses are rare and, overall, turns are short, structures are repetitive and errors are frequent. |
+| **3** | Basic sentence forms are attempted but grammatical errors are numerous except in apparently memorised utterances. Displays some features of band 2, and some, but not all, of the positive features of band 4. |
+| **2** | No evidence of basic sentence forms. |
+| **1** | No rateable language unless memorised. |
+| **0** | Does not attend. |
+
+### Pronunciation (reference only — see limitation note below)
+| Band | Description |
+|---|---|
+| **9** | Uses a full range of phonological features to convey precise and/or subtle meaning. Flexible use of features of connected speech is sustained throughout. Can be effortlessly understood throughout. Accent has no effect on intelligibility. |
+| **8** | Uses a wide range of phonological features to convey precise and/or subtle meaning. Can sustain appropriate rhythm. Flexible use of stress and intonation across long utterances, despite occasional lapses. Can be easily understood throughout. Accent has minimal effect on intelligibility. |
+| **7** | Displays all the positive features of band 6, and some, but not all, of the positive features of band 8. |
+| **6** | Uses a range of phonological features, but control is variable. Chunking is generally appropriate, but rhythm may be affected by a lack of stress-timing and/or a rapid speech rate. Some effective use of intonation and stress, but this is not sustained. Individual words or phonemes may be mispronounced but this causes only occasional lack of clarity. Can generally be understood throughout without much effort. |
+| **5** | Displays all the positive features of band 4, and some, but not all, of the positive features of band 6. |
+| **4** | Uses some acceptable phonological features, but the range is limited. Produces some acceptable chunking, but there are frequent lapses in overall rhythm. Attempts to use intonation and stress, but control is limited. Individual words or phonemes are frequently mispronounced, causing lack of clarity. Understanding requires some effort and there may be patches of speech that cannot be understood. |
+| **3** | Displays some features of band 2, and some, but not all, of the positive features of band 4. |
+| **2** | Uses few acceptable phonological features (possibly because sample is insufficient). Overall problems with delivery impair attempts at connected speech. Individual words and phonemes are mainly mispronounced and little meaning is conveyed. Often unintelligible. |
+| **1** | Can produce occasional individual words and phonemes that are recognisable, but no overall meaning is conveyed. Unintelligible. |
+| **0** | Does not attend. |
 
 ## IMPORTANT LIMITATION (levels 5 & 6 only)
 
-You are working from **text only, with no audio**, so you cannot genuinely judge **Pronunciation** — never invent a pronunciation band. Give it as "Not assessed — text-only input," and calculate any overall band as the average of the other three criteria, clearly labeled as a 3-criterion estimate. Don't raise "pronunciation" at all for levels 1–4 — it's not part of what you're assessing there.
+You are working from **text only, with no audio**, so you cannot genuinely judge **Pronunciation** even though its official descriptors are listed above for completeness — never invent a pronunciation band from a transcript. Give it as "Not assessed — text-only input," and calculate any overall band as the average of the other three criteria, clearly labeled as a 3-criterion estimate. Don't raise "pronunciation" at all for levels 1–4 — it's not part of what you're assessing there.
 
 Also: your fluency judgment is only as good as the transcript. If the transcription tool has auto-cleaned the speech (removed fillers, fixed grammar, added punctuation), say so rather than pretending certainty.
 
